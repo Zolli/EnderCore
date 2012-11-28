@@ -1,0 +1,72 @@
+<project name="EnderCore" default="distribution" basedir=".">
+	
+	<!-- Basic definitions -->
+	<property name="projectName" value="EnderCore"/>
+	
+	<!-- Basic path elements -->
+	<property name="src" location="."/>
+	<property name="resources" location="resources"/>
+	<property name="lib" location="./lib"/>
+	<property name="target" location="./target"/>
+	<property name="classes" location="${target}/classes"/>
+	<property name="build" location="${target}/"/>
+	
+	<!-- The game and server version, which the librarys download for -->
+	<property name="libsVer" value="145"/>
+	
+	<!-- Librarys definition -->
+	<property name="bukkit" value="Bukkit.jar"/>
+	<property name="craftBukkit" value="CraftBukkit.jar"/>
+	<property name="Vault" value="Vault.jar"/>
+	<property name="PEX" value="PermissionsEx.jar"/>
+	<property name="GM" value="EssentialsGroupManager.jar"/>
+	<property name="ESS" value="Essentials.jar"/>
+	<property name="ICON6" value="iConomy_V6.jar"/>
+	<property name="ICON8" value="iConomy_V8.jar"/>
+	<property name="BOSE" value="BOSEconomy.jar"/>
+	
+	<target name="init">
+		<echo message="Started building ${projectName} Version 0.1.1.52"/>
+		<mkdir dir="${lib}"/>
+		<mkdir dir="${target}"/>
+		<mkdir dir="${classes}"/>
+	</target>
+	
+	<target name="get_libs" depends="init">
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/Bukkit.jar" dest="${lib}/${bukkit}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/CraftBukkit.jar" dest="${lib}/${craftBukkit}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/Vault.jar" dest="${lib}/${Vault}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/PermissionsEx.jar" dest="${lib}/${PEX}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/EssentialsGroupManager.jar" dest="${lib}/${GM}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/Essentials.jar" dest="${lib}/${ESS}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/iConomy_V6.jar" dest="${lib}/${ICON6}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/iConomy_V8.jar" dest="${lib}/${ICON8}" usetimestamp="true"/>
+		<get src="http://mc.coldline.hu/zolli/${libsVer}/BOSEconomy.jar" dest="${lib}/${BOSE}" usetimestamp="true"/>
+	</target>
+	
+	<target name="compile" depends="get_libs">
+		<javac srcdir="${src}" destdir="${classes}" target="1.6" source="1.6" includeantruntime="false" debug="on">
+		<classpath>
+			<pathelement location="${lib}/${bukkit}"/>
+			<pathelement location="${lib}/${craftBukkit}"/>
+			<pathelement location="${lib}/${Vault}"/>
+			<pathelement location="${lib}/${PEX}"/>
+			<pathelement location="${lib}/${GM}"/>
+			<pathelement location="${lib}/${ESS}"/>
+			<pathelement location="${lib}/${ICON6}"/>
+			<pathelement location="${lib}/${ICON8}"/>
+			<pathelement location="${lib}/${BOSE}"/>
+		</classpath>
+		</javac>
+	</target>
+	
+	<target name="distribution" depends="compile">
+		<mkdir dir="${build}"/>
+		<jar jarfile="${build}/EnderCore.jar" update="true">
+			<fileset dir="${classes}/"/>
+			<fileset dir="${resources}/"/>
+		</jar>
+		<delete dir="${target}/classes"/>
+	</target>
+	
+</project>
