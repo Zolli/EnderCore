@@ -19,12 +19,15 @@ public class Configuration {
  
 	public JavaPlugin plugin;
 	File configFile;
+	File storageFile;
 	//label [1]
 	public FileConfiguration config;
+	public FileConfiguration storage;
 	//label [2]
- 
+	
 	public void loadConfig() {
 		configFile = new File(plugin.getDataFolder(), "config.yml");
+		storageFile = new File(plugin.getDataFolder(), "storage.yml");
 		//label [3]
 	}
  
@@ -32,6 +35,10 @@ public class Configuration {
 		if (!configFile.exists()) {
 			configFile.getParentFile().mkdirs();
 			copy(plugin.getResource("config.yml"), configFile);
+		}
+		if (!storageFile.exists()) {
+			storageFile.getParentFile().mkdirs();
+			copy(plugin.getResource("storage.yml"), storageFile);
 		}
 		//label [4]
 	}
@@ -54,6 +61,7 @@ public class Configuration {
 	public void loadYamls() {
 		try {
 			config.load(configFile);
+			storage.load(storageFile);
 			} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,6 +71,7 @@ public class Configuration {
 	public void saveYamls() {
 		try {
 			config.save(configFile);
+			storage.save(storageFile);
 			} catch (IOException e) {
 			e.printStackTrace();
 			}
