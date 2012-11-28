@@ -20,8 +20,10 @@ public class EnderCore extends JavaPlugin {
 	private File dataFolder;
 	
 	public void onLoad() {
+		this.pluginDescription = getDescription();
+		
 		this.dataFolder = this.getDataFolder();
-		this.logger = new simpleLogger(this.dataFolder);
+		this.logger = new simpleLogger(this.pluginDescription, this.dataFolder);
 		this.configuration = new Configuration();
 	}
 	
