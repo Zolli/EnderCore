@@ -1,7 +1,6 @@
 package com.Zolli.EnderCore;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
