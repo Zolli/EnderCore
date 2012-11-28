@@ -14,6 +14,7 @@ public class EnderCore extends JavaPlugin {
 	
 	private PluginManager pluginManager;
 	public simpleLogger logger;
+	Configuration configuration;
 	public String logPrefix;
 	private PluginDescriptionFile pluginDescription;
 	private File dataFolder;
@@ -21,13 +22,13 @@ public class EnderCore extends JavaPlugin {
 	public void onLoad() {
 		this.dataFolder = this.getDataFolder();
 		this.logger = new simpleLogger(this.dataFolder);
-		Configuration configuration = new Configuration();
-		FileConfiguration config = configuration.config;
-		FileConfiguration storage = configuration.storage;
+		this.configuration = new Configuration();
 	}
 	
 	public void onEnable() {
-		
+		configuration.loadYamls();
+		FileConfiguration config = configuration.config;
+		FileConfiguration storage = configuration.storage;
 	}
 	
 	public void onDisable() {
