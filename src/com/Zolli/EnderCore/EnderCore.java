@@ -9,16 +9,38 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.Zolli.EnderCore.Configuration.Configuration;
 import com.Zolli.EnderCore.Logger.simpleLogger;
+import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 
 public class EnderCore extends JavaPlugin {
 	
+	/**
+	 * Bukkit PluginManager instance
+	 */
 	private PluginManager pluginManager;
+	
+	/**
+	 * SimpleLogger object
+	 */
 	public simpleLogger logger;
+	
+	/**
+	 * Configuration object
+	 */
 	Configuration configuration;
-	public String logPrefix;
+	
+	/**
+	 * PluginDescriptionFile object
+	 */
 	private PluginDescriptionFile pluginDescription;
+	
+	/**
+	 * Location of plugin data folder
+	 */
 	private File dataFolder;
 	
+	/**
+	 * Runs when plugin initialization started
+	 */
 	public void onLoad() {
 		this.pluginDescription = getDescription();
 		
@@ -27,25 +49,22 @@ public class EnderCore extends JavaPlugin {
 		this.configuration = new Configuration();
 	}
 	
+	/**
+	 * Runs when initialization end (loaded plugin.yml file) 
+	 */
 	public void onEnable() {
 		configuration.loadYamls();
 		FileConfiguration config = configuration.config;
 		FileConfiguration storage = configuration.storage;
-	}
-	
-	public void onDisable() {
 		
+		this.logger.log(Level.INFO, "Sucessfully enabled!");
 	}
 	
-	public EnderCore getCore() {
-		return this;
+	/**
+	 * Runs when disabling signal sent
+	 */
+	public void onDisable() {
+		this.logger.log(Level.INFO, "Disabling...");
 	}
 	
-	public PluginManager getPluginManager() {
-		return this.pluginManager;
-	}
-	
-	public PluginDescriptionFile getDescriptionFile() {
-		return this.pluginDescription;
-	}
 }
