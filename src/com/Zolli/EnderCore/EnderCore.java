@@ -2,10 +2,12 @@ package com.Zolli.EnderCore;
 
 import java.io.File;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.Zolli.EnderCore.Configuration.Configuration;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 
 public class EnderCore extends JavaPlugin {
@@ -19,6 +21,9 @@ public class EnderCore extends JavaPlugin {
 	public void onLoad() {
 		this.dataFolder = this.getDataFolder();
 		this.logger = new simpleLogger(this.dataFolder);
+		Configuration configuration = new Configuration();
+		FileConfiguration config = configuration.config;
+		FileConfiguration storage = configuration.storage;
 	}
 	
 	public void onEnable() {
