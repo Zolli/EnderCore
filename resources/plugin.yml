@@ -1,0 +1,5 @@
+name: EnderCore
+version: 0.1
+authors: [Zolli]
+main: com.Zolli.EnderCore.EnderCore
+load: POSTWORLD
