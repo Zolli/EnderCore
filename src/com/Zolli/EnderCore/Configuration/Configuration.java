@@ -16,21 +16,44 @@ import org.bukkit.plugin.java.JavaPlugin;
 */
  
 public class Configuration {
- 
-	public JavaPlugin plugin;
-	File configFile;
-	File storageFile;
-	//label [1]
-	public FileConfiguration config;
-	public FileConfiguration storage;
-	//label [2]
 	
+	/**
+	 * JavaPlugin object
+	 */
+	public JavaPlugin plugin;
+	
+	/**
+	 * Configuration file
+	 */
+	File configFile;
+	
+	/**
+	 * Storage engine file
+	 */
+	File storageFile;
+	
+	/**
+	 * Config file FileConfiguration object
+	 */
+	public FileConfiguration config;
+	
+	/**
+	 * storage engine file FileConfiguration object
+	 */
+	public FileConfiguration storage;
+	
+	/**
+	 * Loading configuration file
+	 */
 	public void loadConfig() {
 		configFile = new File(plugin.getDataFolder(), "config.yml");
 		storageFile = new File(plugin.getDataFolder(), "storage.yml");
-		//label [3]
 	}
- 
+	
+	/**
+	 * Check the configuration file ar exist in desired location
+	 * @throws Exception when file copy, or directory making is failed
+	 */
 	public void firstRun() throws Exception {
 		if (!configFile.exists()) {
 			configFile.getParentFile().mkdirs();
@@ -40,9 +63,13 @@ public class Configuration {
 			storageFile.getParentFile().mkdirs();
 			copy(plugin.getResource("storage.yml"), storageFile);
 		}
-		//label [4]
 	}
- 
+	
+	/**
+	 * Copy file location to another location
+	 * @param in InputStream object
+	 * @param file File to be copied
+	 */
 	private void copy(InputStream in, File file) {
 		try {
 			OutputStream out = new FileOutputStream(file);
@@ -57,7 +84,10 @@ public class Configuration {
 			e.printStackTrace();
 		}
 	}
- 
+	
+	/**
+	 * Load existing configuration
+	 */
 	public void loadYamls() {
 		try {
 			config.load(configFile);
@@ -65,9 +95,11 @@ public class Configuration {
 			} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//label [5]
 	}
- 
+	
+	/**
+	 * Save existing configuration
+	 */
 	public void saveYamls() {
 		try {
 			config.save(configFile);
@@ -75,6 +107,5 @@ public class Configuration {
 			} catch (IOException e) {
 			e.printStackTrace();
 			}
-			//label [6]
 		}
 	}
