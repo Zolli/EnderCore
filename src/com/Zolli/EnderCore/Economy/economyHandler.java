@@ -28,7 +28,7 @@ public class economyHandler {
 	Econs handler = null;
 	
 	/**
-	 * Main function of Economy handler. This class scan all available plugin
+	 * Constuctor of Economy handler. This class scan all available plugin
 	 * and get the most valuable plugin. When found this class return
 	 * 
 	 * @param plugin One object of the plugin main class

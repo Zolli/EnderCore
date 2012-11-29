@@ -39,7 +39,7 @@ public class simpleLogger {
 	private fileUtils fileUtils;
 	
 	/**
-	 * Constructor
+	 * Constructor (Only logging messages to console)
 	 * @param pdFile DescriptionFile object
 	 */
 	public simpleLogger(PluginDescriptionFile pdFile) {
@@ -49,7 +49,7 @@ public class simpleLogger {
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor (Log messages both location, predefinied filename)
 	 * @param pdFile DescriptionFile object
 	 * @param dataFolder Log file location
 	 */
@@ -62,7 +62,7 @@ public class simpleLogger {
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor(Logmessages to file, optionally send logs to console)
 	 * @param pdFile DescriptionFile object
 	 * @param logToConsole Definies the class send the output to console
 	 * @param dataFolder Log file location
@@ -76,7 +76,7 @@ public class simpleLogger {
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor (Log messages both location, definable filename)
 	 * @param pdFile DescriptionFile object
 	 * @param dataFolder Log file location
 	 * @param logName Log file name
@@ -90,7 +90,7 @@ public class simpleLogger {
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor (Log messages to file, optionally send messages to console, definable filenames)
 	 * @param pdFile DescriptionFile object
 	 * @param logToConsole Definies the class sned output to console
 	 * @param dataFolder Log file location
@@ -105,7 +105,7 @@ public class simpleLogger {
 	}
 	
 	/**
-	 * Log a message with given level, and write the log file to console, or file, or both
+	 * Log a message with given level, and write the log file to console, or file, or both (Definied by constructor)
 	 * @param l
 	 * @param message
 	 */
