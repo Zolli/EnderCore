@@ -17,8 +17,9 @@ public class Storage {
 	private String dataFolder;
 	private FileConfiguration config;
 	private simpleLogger logger;
+	private Connection conn;
 	
-	public void Storage(storageEngine engine, String dataFolder, FileConfiguration config, simpleLogger log) {
+	public Storage(storageEngine engine, String dataFolder, FileConfiguration config, simpleLogger log) {
 		this.nu = new networkUtils();
 		this.selectedEngine = engine;
 		this.config = config;
@@ -28,6 +29,9 @@ public class Storage {
 		if(!engine.getDownloadUrl().equalsIgnoreCase("none")) {
 			this.downloadDriver(engine.getDownloadUrl(), engine.getFileName());
 		}
+		
+		this.initializeDriver();
+		this.conn = this.getConnection();
 	}
 	
 	private void initializeDriver() {
@@ -42,7 +46,13 @@ public class Storage {
 				Class.forName("org.slite.JDBC");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			}
+			} 
+		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
+			try {
+				Class.forName("org.h2.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
 		}
 	}
 	
@@ -57,6 +67,13 @@ public class Storage {
 		} else if(this.selectedEngine.equals(storageEngine.SQLITE)) {
 			try {
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.dataFolder + File.separator + "EnderCore.db");
+				return conn;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
+			try {
+				Connection conn = DriverManager.getConnection("jdbc:h2:" + this.dataFolder + File.separator + "EnderCore.h2");
 				return conn;
 			} catch (SQLException e) {
 				e.printStackTrace();
