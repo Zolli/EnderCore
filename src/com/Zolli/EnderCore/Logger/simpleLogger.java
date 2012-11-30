@@ -14,7 +14,7 @@ public class simpleLogger {
 	private boolean logToFile;
 	
 	/**
-	 * Definis the class send log messages to standard output (STDOUT)
+	 * Defines the class send log messages to standard output (STDOUT)
 	 */
 	private boolean logToConsole;
 	
@@ -26,7 +26,7 @@ public class simpleLogger {
 	/**
 	 * The log file name
 	 */
-	private String logName = "EnderCoreLog.log";
+	private String logName;
 	
 	/**
 	 * The log file
@@ -38,70 +38,61 @@ public class simpleLogger {
 	 */
 	private fileUtils fileUtils;
 	
-	/**
-	 * Constructor (Only logging messages to console)
-	 * @param pdFile DescriptionFile object
-	 */
-	public simpleLogger(PluginDescriptionFile pdFile) {
-		this.logToFile = false;
-		this.logToConsole = true;
-		this.logPrefix = "[" + pdFile.getName() + "]";
-	}
-	
-	/**
-	 * Constructor (Log messages both location, predefinied filename)
-	 * @param pdFile DescriptionFile object
-	 * @param dataFolder Log file location
-	 */
-	public simpleLogger(PluginDescriptionFile pdFile, File dataFolder) {
-		this.logToFile = true;
-		this.logToConsole = true;
-		this.logFile = new File(dataFolder, this.logName);
-		this.fileUtils = new fileUtils(this.logFile);
-		this.logPrefix = "[" + pdFile.getName() + "]";
-	}
-	
-	/**
-	 * Constructor(Logmessages to file, optionally send logs to console)
-	 * @param pdFile DescriptionFile object
-	 * @param logToConsole Definies the class send the output to console
-	 * @param dataFolder Log file location
-	 */
-	public simpleLogger(PluginDescriptionFile pdFile, boolean logToConsole, File dataFolder) {
-		this.logToFile = true;
-		this.logToConsole = logToConsole;
-		this.logFile = new File(dataFolder, this.logName);
-		this.fileUtils = new fileUtils(this.logFile);
-		this.logPrefix = "[" + pdFile.getName() + "]";
-	}
-	
-	/**
-	 * Constructor (Log messages both location, definable filename)
-	 * @param pdFile DescriptionFile object
-	 * @param dataFolder Log file location
-	 * @param logName Log file name
-	 */
 	public simpleLogger(PluginDescriptionFile pdFile, File dataFolder, String logName) {
-		this.logToFile = true;
 		this.logToConsole = true;
-		this.logFile = new File(dataFolder, logName);
+		this.logToFile = true;
+		this.logName = logName;
+		this.logFile = new File(dataFolder, this.logName);
 		this.fileUtils = new fileUtils(this.logFile);
 		this.logPrefix = "[" + pdFile.getName() + "]";
 	}
 	
 	/**
-	 * Constructor (Log messages to file, optionally send messages to console, definable filenames)
-	 * @param pdFile DescriptionFile object
-	 * @param logToConsole Definies the class sned output to console
-	 * @param dataFolder Log file location
-	 * @param logNameLog file Name
+	 * Enable or disable file logging 
+	 * @param v Value of file logging
 	 */
-	public simpleLogger(PluginDescriptionFile pdFile, boolean logToConsole, File dataFolder, String logName) {
-		this.logToFile = true;
-		this.logToConsole = logToConsole;
-		this.logFile = new File(dataFolder, logName);
-		this.fileUtils = new fileUtils(this.logFile);
-		this.logPrefix = "[" + pdFile.getName() + "]";
+	public void setFileLogging(boolean v) {
+		this.logToFile = v;
+	}
+	
+	/**
+	 * Gets file logging status
+	 * @return File logging status
+	 */
+	public boolean getFileLogging() {
+		return this.logToFile;
+	}
+	
+	/**
+	 * Enable or disable console logging
+	 * @param v Value of console logging
+	 */
+	public void setConsoleLogging(boolean v) {
+		this.logToConsole = v;
+	}
+	
+	/**
+	 * Get console logging status
+	 * @return Value of console logging
+	 */
+	public boolean getConsoleLogging() {
+		return this.logToConsole;
+	}
+	
+	/**
+	 * Set another prefix to log
+	 * @param v The new prefix value
+	 */
+	public void setPrefix(String v) {
+		this.logPrefix = v;
+	}
+	
+	/**
+	 * Return the current prefix as string
+	 * @return Current prefix
+	 */
+	public String getPrefix() {
+		return this.logPrefix;
 	}
 	
 	/**
