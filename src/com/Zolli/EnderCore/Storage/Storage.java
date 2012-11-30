@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.Zolli.EnderCore.Logger.simpleLogger;
+import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Utils.networkUtils;
 
 public class Storage {
@@ -38,21 +39,30 @@ public class Storage {
 		if(this.selectedEngine.equals(storageEngine.MySQL)) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
+				logger.log(Level.INFO, "Initialized MySQL storage engine!");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		} else if(this.selectedEngine.equals(storageEngine.SQLITE)) {
 			try {
 				Class.forName("org.slite.JDBC");
+				logger.log(Level.INFO, "Initialized SQLite storage engine!");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} 
 		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
 			try {
 				Class.forName("org.h2.Driver");
+				logger.log(Level.INFO, "Initialized H2 Database storage engine!");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} 
+		} else {
+			if(this.selectedEngine.equals(storageEngine.FLATFILE)) {
+				logger.log(Level.INFO, "Initialized flatfile storage engine!");
+			} else {
+				logger.log(Level.INFO, "Initialized NBT storage engine!");
+			}
 		}
 	}
 	
