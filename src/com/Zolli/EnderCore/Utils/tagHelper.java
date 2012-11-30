@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class tagHelper {
 
-	public Map createMap(String s) {
+	public Map<String, String> createMap(String s) {
 		Map<String,String> m = new HashMap<String,String>();
 		String[] pairs = s.split(";");
 		
