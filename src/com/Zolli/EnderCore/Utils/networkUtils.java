@@ -10,19 +10,26 @@ import java.nio.channels.ReadableByteChannel;
 
 public class networkUtils {
 	
+	protected ReadableByteChannel rbc;
+	
 	/**
 	 * Download The file at given url, and save to specified location
 	 * @param Url The url from file is downloaded
 	 * @param saveLocation The location on the file is saved
 	 */
-	public static void downloadAndSave(String Url, String saveLocation) {
+	public void downloadAndSave(String Url, String saveLocation) throws Exception {
 		try {
 			URL website = new URL(Url);
-		    ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-		    FileOutputStream fos = new FileOutputStream(saveLocation);
+		    this.rbc = Channels.newChannel(website.openStream());
+		} catch (Exception e) {
+			new Exception("Failed to retrieve file from definied location!");
+		}
+		
+		try {
+			FileOutputStream fos = new FileOutputStream(saveLocation);
 		    fos.getChannel().transferFrom(rbc, 0, 1 << 24);
 		} catch (Exception e) {
-			e.printStackTrace();
+			new Exception("Failed to save the downloaded file!");
 		}
 	}
 	
