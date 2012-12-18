@@ -1,6 +1,7 @@
 package com.Zolli.EnderCore.Logger;
 
 import java.io.File;
+import java.util.Date;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 
@@ -43,6 +44,11 @@ public class simpleLogger {
 		this.logToFile = true;
 		this.logName = logName;
 		this.logFile = new File(dataFolder, this.logName);
+		
+		if(!this.logFile.exists()) {
+			this.logFile.getParentFile().mkdirs();
+		}
+		
 		this.fileUtils = new fileUtils(this.logFile);
 		this.logPrefix = "[" + pdFile.getName() + "]";
 	}
@@ -100,6 +106,7 @@ public class simpleLogger {
 	 * @param l
 	 * @param message
 	 */
+	@SuppressWarnings("deprecation")
 	public void log(Level l, String message) {
 		String output = this.logPrefix + "[" + l.getName() + "] " + message;
 		
@@ -108,7 +115,9 @@ public class simpleLogger {
 		}
 		
 		if(this.logToFile) {
-			this.fileUtils.writeLineToEnd(output);
+			Date dateObject = new Date();
+			String date = "[" + dateObject.toLocaleString() + "]";
+			this.fileUtils.writeLineToEnd(date + output);
 		}
 	}
 	

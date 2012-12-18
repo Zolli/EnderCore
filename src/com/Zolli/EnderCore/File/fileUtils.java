@@ -30,8 +30,8 @@ public class fileUtils {
 	 */
 	public fileUtils (File file) {
 		this.file = file;
-		this.bReader = this.read();
 		this.bWriter = this.write();
+		this.bReader = this.read();
 	}
 	
 	/**
@@ -42,6 +42,7 @@ public class fileUtils {
 		try {
 			this.bWriter.write(s);
 			this.bWriter.newLine();
+			this.bWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -67,12 +68,21 @@ public class fileUtils {
 	 */
 	private BufferedWriter write() {
 		try {
-			BufferedWriter bWriter = new BufferedWriter(new FileWriter(this.file));
+			BufferedWriter bWriter = new BufferedWriter(new FileWriter(this.file, true));
 			return bWriter;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void finalize() {
+		try {
+			this.bReader.close();
+			this.bWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
