@@ -3,6 +3,7 @@ package com.Zolli.EnderCore;
 import java.io.File;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +27,7 @@ public class EnderCore extends JavaPlugin {
 	/**
 	 * Configuration object
 	 */
-	Configuration configuration;
+	Configuration mainConfig;
 	
 	/**
 	 * PluginDescriptionFile object
@@ -46,18 +47,17 @@ public class EnderCore extends JavaPlugin {
 		
 		this.dataFolder = this.getDataFolder();
 		this.logger = new simpleLogger(this.pluginDescription, this.dataFolder, "EnderCore.Log");
-		this.configuration = new Configuration();
+		this.mainConfig = new Configuration(this, "config.yml");
 	}
 	
 	/**
 	 * Runs when initialization end (loaded plugin.yml file) 
 	 */
 	public void onEnable() {
-		configuration.loadYamls();
-		FileConfiguration config = configuration.config;
-		FileConfiguration storage = configuration.storage;
+		YamlConfiguration config = mainConfig.config;
 		
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
+		this.logger.log(Level.SERVER, config.getString("test"));
 	}
 	
 	/**

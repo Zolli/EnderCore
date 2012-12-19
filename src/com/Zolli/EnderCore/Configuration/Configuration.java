@@ -2,11 +2,12 @@ package com.Zolli.EnderCore.Configuration;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
+
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.Zolli.EnderCore.EnderCore;
  
 /**
 * Yaml saving/loading API
@@ -20,7 +21,7 @@ public class Configuration {
 	/**
 	 * JavaPlugin object
 	 */
-	public JavaPlugin plugin;
+	public EnderCore plugin;
 	
 	/**
 	 * Configuration file
@@ -28,40 +29,42 @@ public class Configuration {
 	File configFile;
 	
 	/**
-	 * Storage engine file
+	 * Config file name
 	 */
-	File storageFile;
+	String configFileName;
 	
 	/**
 	 * Config file FileConfiguration object
 	 */
-	public FileConfiguration config;
+	public YamlConfiguration config;
 	
 	/**
-	 * storage engine file FileConfiguration object
+	 * Constructor
+	 * @param instance EnderCore instance
 	 */
-	public FileConfiguration storage;
-	
-	/**
-	 * Loading configuration file
-	 */
-	public void loadConfig() {
-		configFile = new File(plugin.getDataFolder(), "config.yml");
-		storageFile = new File(plugin.getDataFolder(), "storage.yml");
+	public Configuration(EnderCore instance, String fileName) {
+		this.plugin = instance;
+		this.configFileName = fileName;
+		this.initialize(this.configFileName);
+		
+		try {
+			this.firstRun(this.configFileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		this.load();
+		
 	}
 	
 	/**
 	 * Check the configuration file ar exist in desired location
 	 * @throws Exception when file copy, or directory making is failed
 	 */
-	public void firstRun() throws Exception {
+	public void firstRun(String fileName) throws Exception {
 		if (!configFile.exists()) {
 			configFile.getParentFile().mkdirs();
-			copy(plugin.getResource("config.yml"), configFile);
-		}
-		if (!storageFile.exists()) {
-			storageFile.getParentFile().mkdirs();
-			copy(plugin.getResource("storage.yml"), storageFile);
+			copy(plugin.getResource(fileName), configFile);
 		}
 	}
 	
@@ -86,26 +89,24 @@ public class Configuration {
 	}
 	
 	/**
-	 * Load existing configuration
+	 * Create a new File in plugin folder.
+	 * @param FileName
 	 */
-	public void loadYamls() {
+	private void initialize(String FileName) {
+		configFile = new File(plugin.getDataFolder(), FileName);
+	}
+	
+	/**
+	 * Load File content into YamlConfiguration object
+	 */
+	private void load() {
+		config = new YamlConfiguration();
+		
 		try {
-			config.load(configFile);
-			storage.load(storageFile);
-			} catch (Exception e) {
+			config.load(this.configFile);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	/**
-	 * Save existing configuration
-	 */
-	public void saveYamls() {
-		try {
-			config.save(configFile);
-			storage.save(storageFile);
-			} catch (IOException e) {
-			e.printStackTrace();
-			}
-		}
-	}
+}
