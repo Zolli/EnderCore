@@ -1,6 +1,7 @@
 package com.Zolli.EnderCore.Utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -26,8 +27,16 @@ public class networkUtils {
 		}
 		
 		try {
+			File file = new File(saveLocation);
+			
+			if(!file.exists()) {
+				file.getParentFile().mkdirs();
+			}
+			
 			FileOutputStream fos = new FileOutputStream(saveLocation);
 		    fos.getChannel().transferFrom(rbc, 0, 1 << 24);
+		    fos.flush();
+		    fos.close();
 		} catch (Exception e) {
 			new Exception("Failed to save the downloaded file!");
 		}

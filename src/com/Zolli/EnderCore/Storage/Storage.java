@@ -147,7 +147,7 @@ public class Storage {
 	 */
 	private void downloadDriver(String Url, String savedFileName) {
 		try {
-			this.nu.downloadAndSave(Url, "./Plugins/EnderCore" + File.separator + savedFileName);
+			this.nu.downloadAndSave(Url, "./lib" + File.separator + savedFileName);
 		} catch (Exception e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -212,7 +212,7 @@ public class Storage {
 	
 	public enum storageEngine {
 		SQLITE("http://", "sqlite.jar"),
-		MySQL("http://", "mysql.jar"),
+		MySQL("http://mc.coldline.hu/zolli/lib/mysqlConnector.jar", "mysql.jar"),
 		H2DB("http://", "h2.jar"),
 		FLATFILE("none"),
 		NBT("none");
@@ -226,6 +226,7 @@ public class Storage {
 		
 		private storageEngine(String s, String f) {
 			this.driverUrl = s;
+			this.fileName = f;
 		}
 		
 		public String getDownloadUrl() {

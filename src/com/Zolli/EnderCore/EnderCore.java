@@ -2,7 +2,6 @@ package com.Zolli.EnderCore;
 
 import java.io.File;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -11,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.Zolli.EnderCore.Configuration.Configuration;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
+import com.Zolli.EnderCore.Storage.Storage;
+import com.Zolli.EnderCore.Storage.Storage.storageEngine;
 
 public class EnderCore extends JavaPlugin {
 	
@@ -40,6 +41,16 @@ public class EnderCore extends JavaPlugin {
 	private File dataFolder;
 	
 	/**
+	 * Main configuration object
+	 */
+	YamlConfiguration config;
+	
+	/**
+	 * Storage engine class
+	 */
+	private Storage storage;
+	
+	/**
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
@@ -54,10 +65,11 @@ public class EnderCore extends JavaPlugin {
 	 * Runs when initialization end (loaded plugin.yml file) 
 	 */
 	public void onEnable() {
-		YamlConfiguration config = mainConfig.config;
+		config = mainConfig.config;
+		this.storage = new Storage(storageEngine.MySQL, this.dataFolder, this.config, this.logger);
+		
 		
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
-		this.logger.log(Level.SERVER, config.getString("test"));
 	}
 	
 	/**
