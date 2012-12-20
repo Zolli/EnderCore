@@ -24,7 +24,7 @@ public class EnderCore extends JavaPlugin {
 	/**
 	 * Bukkit PluginManager instance
 	 */
-	private PluginManager pluginManager;
+	public PluginManager pluginManager;
 	
 	/**
 	 * SimpleLogger object
