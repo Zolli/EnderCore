@@ -40,22 +40,44 @@ public class localizationManager {
 		this.checkAndLoadFile(languageFile);
 	}
 	
+	/**
+	 * Get a string from currently loaded localization file
+	 * @param path The string path
+	 * @return Localized string
+	 */
 	public String getLocalizedString(String path) {
 		return langConf.getString(path);
 	}
 	
+	/**
+	 * Get the language author name
+	 * @return the author name
+	 */
 	public String getLanguageAuthor() {
 		return langConf.getString("about.author");
 	}
 	
+	/**
+	 * Get the language real name defined in file
+	 * @return Language name
+	 */
 	public String getLanguageRealName() {
 		return langConf.getString("about.langName");
 	}
 	
+	/**
+	 * Get the language file name which currently in use
+	 * @return the language filename
+	 */
 	public String getLanguageFilename() {
 		return this.language + ".yml";
 	}
 	
+	/**
+	 * Check the localization file exist is given location, is not exist check in jar and copy it. If file
+	 * not found in jar load the default configuration file
+	 * @param languageFile The language file
+	 */
 	private void checkAndLoadFile(File languageFile) {
 		if(!languageFile.exists()) {
 			languageFile.getParentFile().mkdirs();
@@ -75,6 +97,10 @@ public class localizationManager {
 		}
 	}
 	
+	/**
+	 * load the language file into YamlConfiguration object
+	 * @param file language file
+	 */
 	private void loadLocalization(File file) {
 		this.langConf = new YamlConfiguration();
 		
