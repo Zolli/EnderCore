@@ -40,6 +40,22 @@ public class localizationManager {
 		this.checkFile(languageFile);
 	}
 	
+	public String getLocalizedString(String path) {
+		return langConf.getString(path);
+	}
+	
+	public String getLanguageAuthor() {
+		return langConf.getString("about.author");
+	}
+	
+	public String getLanguageRealName() {
+		return langConf.getString("about.langName");
+	}
+	
+	public String getLanguageFilename() {
+		return this.language + ".yml";
+	}
+	
 	private void checkFile(File languageFile) {
 		if(!languageFile.exists()) {
 			languageFile.getParentFile().mkdirs();
