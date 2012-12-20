@@ -66,7 +66,9 @@ public class EnderCore extends JavaPlugin {
 	 */
 	public void onEnable() {
 		config = mainConfig.config;
-		this.storage = new Storage(storageEngine.MySQL, this.dataFolder, this.config, this.logger);
+		
+		String driver = config.getString("database.type");
+		this.storage = new Storage(driver, this.dataFolder, this.config, this.logger);
 		
 		
 		this.logger.log(Level.INFO, "Sucessfully enabled!");

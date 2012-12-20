@@ -1,1 +1,20 @@
-test: 'test'
+# ---------------------------------------------
+# EnderCore configuration file
+# 
+# Database configuration:
+# 
+# database:           
+#  type: 'mysql'       //Database type (mysql, sqlite, h2, nbt, flatfile)
+#  host: 'localhost'   //Database host (If database type is file database, this line is ignored)
+#  name : 'test'       //Database name
+#  username: 'root'    //Database username
+#  password: ''        //Database password
+# 
+# ---------------------------------------------
+
+database:
+  type: 'mysql'
+  host: 'localhost'
+  name : 'test'
+  username: 'root'
+  password: ''
