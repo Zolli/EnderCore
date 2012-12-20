@@ -37,7 +37,7 @@ public class localizationManager {
 		File languageFile = new File(plugin.getDataFolder() + File.separator + "lang" + File.separator + this.language + ".yml");
 		
 		//If language file is not exist, create directory, and copy the resource. If resource not found in the jar, set the default localization to English
-		this.checkFile(languageFile);
+		this.checkAndLoadFile(languageFile);
 	}
 	
 	public String getLocalizedString(String path) {
@@ -56,7 +56,7 @@ public class localizationManager {
 		return this.language + ".yml";
 	}
 	
-	private void checkFile(File languageFile) {
+	private void checkAndLoadFile(File languageFile) {
 		if(!languageFile.exists()) {
 			languageFile.getParentFile().mkdirs();
 
