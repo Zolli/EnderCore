@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -116,6 +117,32 @@ public class Storage {
 	    method.invoke(ClassLoader.getSystemClassLoader(), new Object[]{file.toURI().toURL()});
 	}
 	
+	public boolean setDefeated(String name, boolean b) {
+		switch(this.selectedEngine) {
+			case MySQL:
+			case SQLITE:
+			case H2DB:
+				try {
+					PreparedStatement pstmt = conn.prepareStatement("INSERT INTO `players` (playerName,dragonDefeated) VALUES(?, ?)");
+					pstmt.setString(1, name);
+					if(b) {
+						pstmt.setString(2, "1");
+					} else {
+						pstmt.setString(2, "0");
+					}
+					pstmt.executeUpdate();
+					return true;
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+		}
+		return false;
+	}
+	
+	/**
+	 * Create the tables in database if not exists
+	 */
 	private void createTables() {
 		switch(this.selectedEngine) {
 			case MySQL:

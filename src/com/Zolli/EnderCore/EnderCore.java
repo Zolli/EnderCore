@@ -60,7 +60,7 @@ public class EnderCore extends JavaPlugin {
 	/**
 	 * Storage engine class
 	 */
-	private Storage storage;
+	public Storage storage;
 	
 	/**
 	 * LocalizationManager class

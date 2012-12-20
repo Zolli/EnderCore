@@ -11,7 +11,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.Zolli.EnderCore.EnderCore;
 import com.Zolli.EnderCore.Events.playerDefeatDragonEvent;
-import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 
 public class entityListener implements Listener {
 	
@@ -42,7 +41,8 @@ public class entityListener implements Listener {
 			Player pl = (Player) EDBEEvent.getDamager();
 			EnderDragon enderDragon = (EnderDragon) entity;
 			
-			//TODO Some stuff here
+			plugin.storage.setDefeated(pl.getName(), true);
+			pl.sendMessage(plugin.local.getLocalizedString("defeat.successSingle"));
 			
 			//Trigger the playerDefeatDragonEvent()
 			playerDefeatDragonEvent defeatEvent = new playerDefeatDragonEvent(pl, enderDragon);
