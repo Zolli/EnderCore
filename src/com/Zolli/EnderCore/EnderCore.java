@@ -32,9 +32,14 @@ public class EnderCore extends JavaPlugin {
 	public simpleLogger logger;
 	
 	/**
-	 * Configuration object
+	 * Configuration object for main config
 	 */
-	Configuration mainConfig;
+	private Configuration mainConfig;
+	
+	/**
+	 * Configuration object for flatfile storage engine
+	 */
+	private Configuration storageConfig;
 	
 	/**
 	 * PluginDescriptionFile object
@@ -49,7 +54,7 @@ public class EnderCore extends JavaPlugin {
 	/**
 	 * Main configuration object
 	 */
-	YamlConfiguration config;
+	public YamlConfiguration config;
 	
 	/**
 	 * Storage engine class
@@ -74,7 +79,7 @@ public class EnderCore extends JavaPlugin {
 		config = mainConfig.config;
 		String driver = config.getString("database.type");
 		
-		this.storage = new Storage(driver, this.dataFolder, this.config, this.logger);
+		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
 		this.registerListeners();
 		
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
@@ -87,6 +92,9 @@ public class EnderCore extends JavaPlugin {
 		this.logger.log(Level.INFO, "Disabling...");
 	}
 	
+	/**
+	 * Register all listeners into EventHandler
+	 */
 	private void registerListeners() {
 		this.pluginManager.registerEvents(new blockListener(this), this);
 		this.pluginManager.registerEvents(new entityListener(this), this);
@@ -94,6 +102,15 @@ public class EnderCore extends JavaPlugin {
 		this.pluginManager.registerEvents(new playerListener(this), this);
 		this.pluginManager.registerEvents(new serverListeners(this), this);
 		this.pluginManager.registerEvents(new worldListener(this), this);
+	}
+	
+	/**
+	 * Initialize flatfile storage engine, if needed. Called in storageEngine
+	 * @return 
+	 */
+	public Configuration initializeFlatfile() {
+		this.storageConfig = new Configuration(this, "storage.yml");
+		return this.storageConfig;
 	}
 	
 }

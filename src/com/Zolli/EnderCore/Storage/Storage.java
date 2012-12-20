@@ -12,8 +12,10 @@ import java.sql.Statement;
 import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.Zolli.EnderCore.EnderCore;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Utils.networkUtils;
@@ -57,13 +59,24 @@ public class Storage {
 	private Connection conn;
 	
 	/**
+	 * Plugin main class
+	 */
+	private EnderCore plugin;
+	
+	/**
+	 * Flatfile storage object
+	 */
+	private YamlConfiguration ffStorage;
+	
+	/**
 	 * Storage class constructor
 	 * @param engine The storageEngine we want to use
 	 * @param dataFolder Folder for file type databases
 	 * @param config Configuration to get database details
 	 * @param log simpleLogger object
 	 */
-	public Storage(String driver, File dataFolder, FileConfiguration config, simpleLogger log) {
+	public Storage(EnderCore instance, String driver, File dataFolder, FileConfiguration config, simpleLogger log) {
+		this.plugin = instance;
 		this.nu = new networkUtils();
 		this.tagHelper = new tagHelper();
 		storageEngine engine = null;
@@ -135,6 +148,7 @@ public class Storage {
 			} 
 		} else {
 			if(this.selectedEngine.equals(storageEngine.FLATFILE)) {
+				this.ffStorage = this.plugin.initializeFlatfile().config;
 				logger.log(Level.INFO, "Initialized flatfile storage engine!");
 			} else {
 				logger.log(Level.INFO, "Initialized NBT storage engine!");
