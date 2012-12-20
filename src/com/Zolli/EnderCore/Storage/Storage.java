@@ -156,14 +156,14 @@ public class Storage {
 			}
 		} else if(this.selectedEngine.equals(storageEngine.SQLITE)) {
 			try {
-				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.dataFolder + File.separator + "EnderCore.db");
+				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.dataFolder + File.separator + "EnderCore.db", this.config.getString("database.username"), this.config.getString("database.password"));
 				return conn;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
 			try {
-				Connection conn = DriverManager.getConnection("jdbc:h2:" + this.dataFolder + File.separator + "EnderCore");
+				Connection conn = DriverManager.getConnection("jdbc:h2:" + this.dataFolder + File.separator + "EnderCore;AUTO_RECONNECT=TRUE", this.config.getString("database.username"), this.config.getString("database.password"));
 				return conn;
 			} catch (SQLException e) {
 				e.printStackTrace();
