@@ -22,6 +22,10 @@ public class playerListener implements Listener {
 	public void playerJoin(PlayerJoinEvent e) {
 		Player pl = e.getPlayer();
 		boolean played = pl.hasPlayedBefore();
+		
+		if(played) {
+			plugin.storage.addPlayer(pl);
+		}
 	}
 	
 }
