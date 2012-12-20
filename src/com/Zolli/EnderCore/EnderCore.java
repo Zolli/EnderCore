@@ -8,6 +8,12 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.Zolli.EnderCore.Configuration.Configuration;
+import com.Zolli.EnderCore.Listeners.blockListener;
+import com.Zolli.EnderCore.Listeners.entityListener;
+import com.Zolli.EnderCore.Listeners.inventoryListener;
+import com.Zolli.EnderCore.Listeners.playerListener;
+import com.Zolli.EnderCore.Listeners.serverListeners;
+import com.Zolli.EnderCore.Listeners.worldListener;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Storage.Storage;
@@ -66,10 +72,10 @@ public class EnderCore extends JavaPlugin {
 	 */
 	public void onEnable() {
 		config = mainConfig.config;
-		
 		String driver = config.getString("database.type");
-		this.storage = new Storage(driver, this.dataFolder, this.config, this.logger);
 		
+		this.storage = new Storage(driver, this.dataFolder, this.config, this.logger);
+		this.registerListeners();
 		
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
 	}
@@ -79,6 +85,15 @@ public class EnderCore extends JavaPlugin {
 	 */
 	public void onDisable() {
 		this.logger.log(Level.INFO, "Disabling...");
+	}
+	
+	private void registerListeners() {
+		this.pluginManager.registerEvents(new blockListener(this), this);
+		this.pluginManager.registerEvents(new entityListener(this), this);
+		this.pluginManager.registerEvents(new inventoryListener(this), this);
+		this.pluginManager.registerEvents(new playerListener(this), this);
+		this.pluginManager.registerEvents(new serverListeners(this), this);
+		this.pluginManager.registerEvents(new worldListener(this), this);
 	}
 	
 }
