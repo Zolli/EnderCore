@@ -66,6 +66,7 @@ public class EnderCore extends JavaPlugin {
 	 */
 	public void onLoad() {
 		this.pluginDescription = getDescription();
+		this.pluginManager = this.getServer().getPluginManager();
 		
 		this.dataFolder = this.getDataFolder();
 		this.logger = new simpleLogger(this.pluginDescription, this.dataFolder, "EnderCore.Log");
