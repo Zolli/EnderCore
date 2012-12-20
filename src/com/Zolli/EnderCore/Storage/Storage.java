@@ -1,6 +1,9 @@
 package com.Zolli.EnderCore.Storage;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -60,9 +63,25 @@ public class Storage {
 	 * @param config Configuration to get database details
 	 * @param log simpleLogger object
 	 */
-	public Storage(storageEngine engine, File dataFolder, FileConfiguration config, simpleLogger log) {
+	public Storage(String driver, File dataFolder, FileConfiguration config, simpleLogger log) {
 		this.nu = new networkUtils();
 		this.tagHelper = new tagHelper();
+		storageEngine engine = null;
+		
+		if(driver.equalsIgnoreCase(storageEngine.MySQL.getName())) {
+			engine = storageEngine.MySQL;
+		} else if(driver.equalsIgnoreCase(storageEngine.SQLITE.getName())) {
+			engine = storageEngine.SQLITE;
+		} else if(driver.equalsIgnoreCase(storageEngine.H2DB.getName())) {
+			engine = storageEngine.H2DB;
+		} else if(driver.equalsIgnoreCase(storageEngine.FLATFILE.getName())) {
+			engine = storageEngine.FLATFILE;
+		} else if(driver.equalsIgnoreCase(storageEngine.NBT.getName())) {
+			engine = storageEngine.NBT;
+		} else {
+			engine = storageEngine.SQLITE;
+		}
+		
 		this.selectedEngine = engine;
 		this.config = config;
 		this.logger= log;
@@ -76,29 +95,42 @@ public class Storage {
 		this.conn = this.setConnection();
 	}
 	
+	private void loadExternalDriver(File file) throws Exception {
+	    Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
+	    method.setAccessible(true);
+	    method.invoke(ClassLoader.getSystemClassLoader(), new Object[]{file.toURI().toURL()});
+	}
+	
 	/**
 	 * Initialize the selected driver, and log initialization result
 	 */
 	private void initializeDriver() {
 		if(this.selectedEngine.equals(storageEngine.MySQL)) {
 			try {
+				File driver = new File("./lib" + File.separator + this.selectedEngine.getFileName());
+				this.loadExternalDriver(driver);
 				Class.forName("com.mysql.jdbc.Driver");
 				logger.log(Level.INFO, "Initialized MySQL storage engine!");
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else if(this.selectedEngine.equals(storageEngine.SQLITE)) {
 			try {
-				Class.forName("org.slite.JDBC");
+				File driver = new File("./lib" + File.separator + this.selectedEngine.getFileName());
+				this.loadExternalDriver(driver);
+				Class.forName("org.sqlite.JDBC");
 				logger.log(Level.INFO, "Initialized SQLite storage engine!");
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			} 
 		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
 			try {
+				File driver = new File("./lib" + File.separator + this.selectedEngine.getFileName());
+				this.loadExternalDriver(driver);
 				Class.forName("org.h2.Driver");
 				logger.log(Level.INFO, "Initialized H2 Database storage engine!");
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "H2 Dtabase driver not found!");
 				e.printStackTrace();
 			} 
 		} else {
@@ -117,7 +149,7 @@ public class Storage {
 	private Connection setConnection() {
 		if(this.selectedEngine.equals(storageEngine.MySQL)) {
 			try {
-				Connection conn = DriverManager.getConnection(this.config.getString("database.host"), this.config.getString("database.username"), this.config.getString("database.password"));
+				Connection conn = DriverManager.getConnection("jdbc:mysql://" + this.config.getString("database.host") + "/" + this.config.getString("database.name"), this.config.getString("database.username"), this.config.getString("database.password"));
 				return conn;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -131,7 +163,7 @@ public class Storage {
 			}
 		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
 			try {
-				Connection conn = DriverManager.getConnection("jdbc:h2:" + this.dataFolder + File.separator + "EnderCore.h2");
+				Connection conn = DriverManager.getConnection("jdbc:h2:" + this.dataFolder + File.separator + "EnderCore");
 				return conn;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -211,22 +243,20 @@ public class Storage {
 	}
 	
 	public enum storageEngine {
-		SQLITE("http://", "sqlite.jar"),
-		MySQL("http://mc.coldline.hu/zolli/lib/mysqlConnector.jar", "mysql.jar"),
-		H2DB("http://", "h2.jar"),
-		FLATFILE("none"),
-		NBT("none");
+		SQLITE("sqlite", "http://mc.coldline.hu/zolli/lib/sqliteConnector.jar", "sqlite.jar"),
+		MySQL("mysql",  "http://mc.coldline.hu/zolli/lib/mysqlConnector.jar", "mysql.jar"),
+		H2DB("h2", "http://mc.coldline.hu/zolli/lib/h2Connector.jar", "h2.jar"),
+		FLATFILE("flatfile", "none", "none"),
+		NBT("nbt", "none", "none");
 		
 		private String driverUrl;
 		private String fileName;
+		private String name;
 		
-		private storageEngine(String s) {
-			this.driverUrl = s;
-		}
-		
-		private storageEngine(String s, String f) {
+		private storageEngine(String n, String s, String f) {
 			this.driverUrl = s;
 			this.fileName = f;
+			this.name = n;
 		}
 		
 		public String getDownloadUrl() {
@@ -235,6 +265,10 @@ public class Storage {
 		
 		public String getFileName() {
 			return this.fileName;
+		}
+		
+		public String getName() {
+			return this.name;
 		}
 		
 	}
