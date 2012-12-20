@@ -12,6 +12,8 @@
 # 
 # ---------------------------------------------
 
+localization: 'en'
+
 database:
   type: 'mysql'
   host: 'localhost'

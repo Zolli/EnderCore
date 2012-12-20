@@ -14,6 +14,7 @@ import com.Zolli.EnderCore.Listeners.inventoryListener;
 import com.Zolli.EnderCore.Listeners.playerListener;
 import com.Zolli.EnderCore.Listeners.serverListeners;
 import com.Zolli.EnderCore.Listeners.worldListener;
+import com.Zolli.EnderCore.Localization.localizationManager;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Storage.Storage;
@@ -62,6 +63,11 @@ public class EnderCore extends JavaPlugin {
 	private Storage storage;
 	
 	/**
+	 * LocalizationManager class
+	 */
+	public localizationManager local;
+	
+	/**
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
@@ -81,6 +87,8 @@ public class EnderCore extends JavaPlugin {
 		String driver = config.getString("database.type");
 		
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
+		this.local = new localizationManager(this);
+		
 		this.registerListeners();
 		
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
