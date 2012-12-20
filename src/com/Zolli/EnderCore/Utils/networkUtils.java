@@ -20,8 +20,12 @@ public class networkUtils {
 	 */
 	public void downloadAndSave(String Url, String saveLocation) throws Exception {
 		try {
-			URL website = new URL(Url);
-		    this.rbc = Channels.newChannel(website.openStream());
+			File file = new File(saveLocation);
+			
+			if(!file.exists()) {
+				URL website = new URL(Url);
+			    this.rbc = Channels.newChannel(website.openStream());
+			}
 		} catch (Exception e) {
 			new Exception("Failed to retrieve file from definied location!");
 		}
@@ -31,12 +35,11 @@ public class networkUtils {
 			
 			if(!file.exists()) {
 				file.getParentFile().mkdirs();
+				FileOutputStream fos = new FileOutputStream(saveLocation);
+			    fos.getChannel().transferFrom(rbc, 0, 1 << 24);
+			    fos.flush();
+			    fos.close();
 			}
-			
-			FileOutputStream fos = new FileOutputStream(saveLocation);
-		    fos.getChannel().transferFrom(rbc, 0, 1 << 24);
-		    fos.flush();
-		    fos.close();
 		} catch (Exception e) {
 			new Exception("Failed to save the downloaded file!");
 		}
