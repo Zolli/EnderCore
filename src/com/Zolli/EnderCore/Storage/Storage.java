@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import com.Zolli.EnderCore.EnderCore;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
+import com.Zolli.EnderCore.Utils.fileUtils;
 import com.Zolli.EnderCore.Utils.networkUtils;
 import com.Zolli.EnderCore.Utils.tagHelper;
 
@@ -106,12 +107,45 @@ public class Storage {
 		
 		this.initializeDriver();
 		this.conn = this.setConnection();
+		this.createTables();
 	}
 	
 	private void loadExternalDriver(File file) throws Exception {
 	    Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
 	    method.setAccessible(true);
 	    method.invoke(ClassLoader.getSystemClassLoader(), new Object[]{file.toURI().toURL()});
+	}
+	
+	private void createTables() {
+		switch(this.selectedEngine) {
+			case MySQL:
+				try {
+					Statement stmt = this.conn.createStatement();
+					stmt.executeUpdate(fileUtils.streamToString(plugin.getResource("sql/" + this.selectedEngine.getName() + "/createTable.sql")));
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			case SQLITE:
+				try {
+					Statement stmt = this.conn.createStatement();
+					stmt.executeUpdate(fileUtils.streamToString(plugin.getResource("sql/" + this.selectedEngine.getName() + "/createTable.sql")));
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			case H2DB:
+				try {
+					Statement stmt = this.conn.createStatement();
+					stmt.executeUpdate(fileUtils.streamToString(plugin.getResource("sql/" + this.selectedEngine.getName() + "/createTable.sql")));
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+		}
 	}
 	
 	/**
