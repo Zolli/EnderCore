@@ -24,7 +24,7 @@ public class playerListener implements Listener {
 		boolean played = pl.hasPlayedBefore();
 		
 		if(played) {
-			plugin.storage.addPlayer(pl);
+			plugin.dbAction.addPlayer(pl);
 		}
 	}
 	

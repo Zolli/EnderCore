@@ -41,7 +41,7 @@ public class entityListener implements Listener {
 			Player pl = (Player) EDBEEvent.getDamager();
 			EnderDragon enderDragon = (EnderDragon) entity;
 			
-			plugin.storage.setDefeated(pl.getName(), true);
+			plugin.dbAction.setDefeated(pl.getName(), true);
 			pl.sendMessage(plugin.local.getLocalizedString("defeat.successSingle"));
 			
 			//Trigger the playerDefeatDragonEvent()
