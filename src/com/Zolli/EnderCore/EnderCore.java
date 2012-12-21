@@ -19,6 +19,7 @@ import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Storage.Storage;
 import com.Zolli.EnderCore.Storage.Storage.storageEngine;
+import com.Zolli.EnderCore.Storage.storageActions;
 
 public class EnderCore extends JavaPlugin {
 	
@@ -63,6 +64,11 @@ public class EnderCore extends JavaPlugin {
 	public Storage storage;
 	
 	/**
+	 * StorageActions class
+	 */
+	private storageActions dbAction;
+	
+	/**
 	 * LocalizationManager class
 	 */
 	public localizationManager local;
@@ -87,6 +93,7 @@ public class EnderCore extends JavaPlugin {
 		String driver = config.getString("database.type");
 		
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
+		this.dbAction = new storageActions(this.storage);
 		this.local = new localizationManager(this);
 		
 		this.registerListeners();

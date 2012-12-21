@@ -51,11 +51,6 @@ public class Storage {
 	private simpleLogger logger;
 	
 	/**
-	 * Tag helper object
-	 */
-	private tagHelper tagHelper;
-	
-	/**
 	 * Connection object
 	 */
 	private Connection conn;
@@ -80,7 +75,6 @@ public class Storage {
 	public Storage(EnderCore instance, String driver, File dataFolder, FileConfiguration config, simpleLogger log) {
 		this.plugin = instance;
 		this.nu = new networkUtils();
-		this.tagHelper = new tagHelper();
 		storageEngine engine = null;
 		
 		if(driver.equalsIgnoreCase(storageEngine.MySQL.getName())) {
@@ -117,45 +111,8 @@ public class Storage {
 	    method.invoke(ClassLoader.getSystemClassLoader(), new Object[]{file.toURI().toURL()});
 	}
 	
-	public boolean addPlayer(Player pl) {
-		switch(this.selectedEngine) {
-			case MySQL:
-			case SQLITE:
-			case H2DB:
-				try {
-					PreparedStatement pstmt = conn.prepareStatement("INSERT INTO `players` (playerName,dragonDefeated) VALUES(?, ?)");
-					pstmt.setString(1, pl.getName());
-					pstmt.setString(2, "0");
-					pstmt.executeUpdate();
-					return true;
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			break;
-		}
-		return false;
-	}
-	
-	public boolean setDefeated(String name, boolean b) {
-		switch(this.selectedEngine) {
-			case MySQL:
-			case SQLITE:
-			case H2DB:
-				try {
-					PreparedStatement pstmt = conn.prepareStatement("UPDATE `players` SET dragonDefeated=?");
-					if(b) {
-						pstmt.setString(1, "1");
-					} else {
-						pstmt.setString(1, "0");
-					}
-					pstmt.executeUpdate();
-					return true;
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				break;
-		}
-		return false;
+	public storageEngine getSelectedEngine() {
+		return this.selectedEngine;
 	}
 	
 	/**
@@ -190,6 +147,8 @@ public class Storage {
 					e.printStackTrace();
 				}
 				break;
+		default:
+			break;
 		}
 	}
 	
@@ -285,54 +244,6 @@ public class Storage {
 	 */
 	public Connection getConnection() {
 		return this.conn;
-	}
-	
-	public boolean setTag(String newTags) {
-		switch (this.selectedEngine) {
-		case MySQL:
-		case SQLITE:
-			try {
-				Statement stmt = conn.createStatement();
-				int rows = stmt.executeUpdate("UPDATE `users` SET uniqueTags = CONCAT(uniqueTags, '" + newTags + "')");
-				if(rows == 1) {
-					return true;
-				} else {
-					return false;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return false;
-		default:
-			break;
-		}
-		return false;
-	}
-	
-	
-	
-	@SuppressWarnings("unchecked")
-	public Map<String, String> getTag(Player pl) {
-		String object = null;
-		
-		switch (this.selectedEngine) {
-		case MySQL:
-		case SQLITE:
-			try {
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT uniqueTags FROM `users` WHERE userName=" + pl.getName() + " LIMIT 1");
-				object = rs.getString(0);
-				stmt.close();
-				return tagHelper.createMap(object);
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return null;
-		default:
-			break;
-		}
-		return null;
 	}
 	
 	public enum storageEngine {
