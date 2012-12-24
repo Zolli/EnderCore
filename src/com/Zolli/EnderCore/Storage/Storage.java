@@ -6,22 +6,17 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import com.Zolli.EnderCore.EnderCore;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
-import com.Zolli.EnderCore.Utils.fileUtils;
+import com.Zolli.EnderCore.File.fileUtils;
 import com.Zolli.EnderCore.Utils.networkUtils;
-import com.Zolli.EnderCore.Utils.tagHelper;
 
 public class Storage {
 	
