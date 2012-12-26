@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.Zolli.EnderCore.EnderCore;
+import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 
 public class playerListener implements Listener {
 	
@@ -22,8 +23,12 @@ public class playerListener implements Listener {
 	public void playerJoin(PlayerJoinEvent e) {
 		Player pl = e.getPlayer();
 		boolean played = pl.hasPlayedBefore();
+		plugin.logger.log(Level.INFO, "INSERT");
+		plugin.dbAction.addPlayer(pl);
+		
 		
 		if(played) {
+			plugin.logger.log(Level.INFO, "INSERT");
 			plugin.dbAction.addPlayer(pl);
 		}
 	}

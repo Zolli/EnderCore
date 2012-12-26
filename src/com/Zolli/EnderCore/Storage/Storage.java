@@ -100,14 +100,31 @@ public class Storage {
 		this.createTables();
 	}
 	
+	/**
+	 * Load external JAR file into Java classpath
+	 * @param file the file to be loaded
+	 * @throws Exception
+	 */
 	private void loadExternalDriver(File file) throws Exception {
 	    Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
 	    method.setAccessible(true);
 	    method.invoke(ClassLoader.getSystemClassLoader(), new Object[]{file.toURI().toURL()});
 	}
 	
+	/**
+	 * Return the current selected storageEngine
+	 * @return storageEngine
+	 */
 	public storageEngine getSelectedEngine() {
 		return this.selectedEngine;
+	}
+	
+	/**
+	 * Return the flat file storage object
+	 * @return Flat file storage object
+	 */
+	public YamlConfiguration getFfStorage() {
+		return this.ffStorage;
 	}
 	
 	/**

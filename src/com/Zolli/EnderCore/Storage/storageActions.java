@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.Zolli.EnderCore.Storage.Storage.storageEngine;
@@ -18,12 +19,17 @@ public class storageActions {
 	private Connection conn;
 	private storageEngine selectedEngine;
 	private tagHelper tagHelper;
+	private YamlConfiguration ffStorage;
 	
 	public storageActions(Storage s) {
 		this.storage = s;
 		this.tagHelper = new tagHelper();
 		this.selectedEngine = this.storage.getSelectedEngine();
 		conn = this.storage.getConnection();
+		
+		if(selectedEngine.equals(storageEngine.FLATFILE)) {
+			this.ffStorage = storage.getFfStorage();
+		}
 	}
 	
 	public boolean addPlayer(Player pl) {
@@ -40,6 +46,14 @@ public class storageActions {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+			break;
+			case FLATFILE:
+				if(this.ffStorage.contains(pl.getName())) {
+					this.ffStorage.set(pl.getName() + ".dragonDefeated", "0");
+				}
+			break;
+			case NBT:
+				
 			break;
 		default:
 			break;
