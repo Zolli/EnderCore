@@ -7,6 +7,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.Zolli.EnderCore.Commands.commandHandler;
+import com.Zolli.EnderCore.Commands.command.infoCommand;
 import com.Zolli.EnderCore.Configuration.Configuration;
 import com.Zolli.EnderCore.Listeners.blockListener;
 import com.Zolli.EnderCore.Listeners.entityListener;
@@ -73,6 +75,11 @@ public class EnderCore extends JavaPlugin {
 	public localizationManager local;
 	
 	/**
+	 * commandHandler class
+	 */
+	public commandHandler command;
+	
+	/**
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
@@ -94,8 +101,10 @@ public class EnderCore extends JavaPlugin {
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
 		this.dbAction = new storageActions(this.storage);
 		this.local = new localizationManager(this);
+		this.command = new commandHandler(this);
 		
 		this.registerListeners();
+		this.registerCommands();
 		
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
 	}
@@ -117,6 +126,13 @@ public class EnderCore extends JavaPlugin {
 		this.pluginManager.registerEvents(new playerListener(this), this);
 		this.pluginManager.registerEvents(new serverListeners(this), this);
 		this.pluginManager.registerEvents(new worldListener(this), this);
+	}
+	
+	/**
+	 * Register all the commands
+	 */
+	private void registerCommands() {
+		this.command.registerCommand(new infoCommand());
 	}
 	
 	/**

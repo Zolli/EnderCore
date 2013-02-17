@@ -4,18 +4,18 @@ import java.util.List;
 
 public class ECCommandController {
 	
-	String commandName;
-	int params;
-	List<String> Permissions;
-	boolean consoleAccess;
-	String subCommand;
+	private List<String> permissions;
+	private List<String> subCommand;
+	private int commandCoast = 0;
+	private String description;
+	private int argsLength = 0;
 	
 	public ECCommandController() {
 		
 	}
 	
 	public void addPermission(String node) {
-		this.Permissions.add(node);
+		this.permissions.add(node);
 	}
 	
 	public void setParamLength(int length) {
@@ -23,7 +23,23 @@ public class ECCommandController {
 	}
 	
 	public void setSubcommand(String sub) {
-		this.subCommand = sub;
+		this.subCommand.add(sub);
+	}
+	
+	public void setCoast(int coast) {
+		this.commandCoast = coast;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public void setArgsLength(int argsLength) {
+		this.argsLength = argsLength;
+	}
+	
+	public String getSubCommand() {
+		return this.subCommand.get(0);
 	}
 	
 }
