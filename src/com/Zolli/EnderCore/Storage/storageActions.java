@@ -107,7 +107,6 @@ public class storageActions {
 		return false;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Map<String, String> getTag(Player pl) {
 		String object = null;
 		

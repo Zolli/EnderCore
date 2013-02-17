@@ -93,7 +93,8 @@ public class fileUtils {
 
 		    char[] buffer = new char[1024];
 		    try {
-		        Reader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+		        @SuppressWarnings("resource")
+				Reader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 		        int n;
 		        while ((n = reader.read(buffer)) != -1)
 		            writer.write(buffer, 0, n);
