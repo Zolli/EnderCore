@@ -1,14 +1,22 @@
 package com.Zolli.EnderCore.Commands.command;
 
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.Zolli.EnderCore.Commands.ECCommand;
 
 public class infoCommand implements ECCommand {
-
+	
+	public infoCommand() {
+		//this.Permissions.add("ec.basic.info");
+	}
+	
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
-		// TODO Auto-generated method stub
+		Player pl = (Player) sender;
+		pl.sendMessage("Hello");
 		return false;
 	}
 
@@ -18,20 +26,23 @@ public class infoCommand implements ECCommand {
 	}
 
 	@Override
-	public String getPermission() {
+	public List<String> getPermission() {
 		return null;
 	}
 
 	@Override
-	public String getArgsLength() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getArgsLength() {
+		return 1;
 	}
 
 	@Override
 	public boolean isEnabledForOPs() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
+	}
+
+	@Override
+	public String getName() {
+		return "info";
 	}
 	
 }

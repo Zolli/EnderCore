@@ -3,3 +3,8 @@ version: 0.1
 authors: [Zolli]
 main: com.Zolli.EnderCore.EnderCore
 load: POSTWORLD
+commands:
+  ec:
+    description: Short version of endercore comamnd
+  endercore:
+    description: Main command for this plugin
