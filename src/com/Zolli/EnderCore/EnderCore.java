@@ -101,7 +101,7 @@ public class EnderCore extends JavaPlugin {
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
 		this.dbAction = new storageActions(this.storage);
 		this.local = new localizationManager(this);
-		this.command = new commandHandler(this);
+		this.command = new commandHandler();
 		
 		this.registerListeners();
 		this.registerCommands();

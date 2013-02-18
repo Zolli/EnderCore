@@ -1,38 +1,26 @@
 package com.Zolli.EnderCore.Commands;
 
-import java.util.List;
+import java.util.Map;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import com.Zolli.EnderCore.EnderCore;
-import com.Zolli.EnderCore.Commands.command.ECCommandController;
 
 public class commandHandler implements CommandExecutor {
 
-	EnderCore plugin;
-	List<ECCommandController> handledCommands;
-	List<String> handletCommandsName;
+	private Map<String, ECCommand> handletCommands;
 	
-	public commandHandler(EnderCore instance) {
-		this.plugin = instance;
+	public void registerCommand(String name, ECCommand command) {
+		this.handletCommands.put(name, command);
 	}
-	
-	public void registerCommand(ECCommandController command) {
-		this.handledCommands.add(command);
-		this.handletCommandsName.add(command.getSubCommand());
-	}
-	
+
+	@Override
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
-		
-		if(this.handletCommandsName.contains(arg0.toString())) {
-			
-		}
-		
+		ECCommand command = this.handletCommands.get(arg1.toString());
 		return false;
 	}
 	
 	
-
+	
 }
