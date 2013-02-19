@@ -35,14 +35,13 @@ public class infoCommand implements ECCommand {
 	
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
-		Player pl = (Player) sender;
-		consoleMenuBuilder m = new consoleMenuBuilder(pl, "EnderCore - Info");
+		consoleMenuBuilder m = new consoleMenuBuilder("EnderCore - Info");
 		m.addMenuItem("/ec info - Display this message");
 		m.addMenuItem("/ec help - Display short help message");
 		m.addMenuItem("/ec purge - Pureg all data in database");
 		m.addMenuItem("/ec status - Display status info");
 		
-		m.build();
+		m.build(sender);
 		return false;
 	}
 	

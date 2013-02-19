@@ -3,6 +3,7 @@ package com.Zolli.EnderCore.Commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,17 +34,10 @@ public class consoleMenuBuilder {
 	private List<String> returnLines = new ArrayList<String>();
 	
 	/**
-	 * Player object who receiving the menu
-	 */
-	private Player pl;
-	
-	/**
 	 * Constructor
-	 * @param player The message receiver
 	 * @param header The menu header title
 	 */
-	public consoleMenuBuilder(Player player, String header) {
-		this.pl = player;
+	public consoleMenuBuilder(String header) {
 		this.menuHeader = header;
 	}
 	
@@ -101,14 +95,27 @@ public class consoleMenuBuilder {
 	}
 	
 	/**
-	 * Send all menu lines to defined player in constructor
+	 * Send all menu lines to player
+	 * @param pl The Player object who receiving the message
 	 */
-	public void build() {
+	public void build(Player pl) {
 		this.buildHeader();
 		this.buildBody();
 		this.buildFooter();
 		String[] s = this.returnLines.toArray(new String[this.returnLines.size()]);
 		pl.sendMessage(s);
+	}
+	
+	/**
+	 * Send all menu lines to player
+	 * @param pl The commandSender object who receiving the message
+	 */
+	public void build(CommandSender sender) {
+		this.buildHeader();
+		this.buildBody();
+		this.buildFooter();
+		String[] s = this.returnLines.toArray(new String[this.returnLines.size()]);
+		sender.sendMessage(s);
 	}
 	
 }
