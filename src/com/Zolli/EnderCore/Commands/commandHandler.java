@@ -30,12 +30,7 @@ public class commandHandler implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
 		ECCommand command = this.handledCommands.get(arg3[0]);
 		this.commandPermissions = command.getPermission();
-		
-		if((sender instanceof ConsoleCommandSender) && command.isAccessibleFromConsole()) {
-			
-		}
-		
-		
+		command.execute(sender, arg3);	
 		return false;
 	}
 	

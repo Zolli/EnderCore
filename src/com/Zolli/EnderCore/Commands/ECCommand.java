@@ -8,8 +8,6 @@ public interface ECCommand {
 	
 	public boolean execute(CommandSender sender, String args[]);
 	public String getName();
-	public boolean isAccessibleFromConsole();
-	public boolean isEnabledForOPs();
 	public List<String> getPermission();
 	public int getArgsLength();
 	

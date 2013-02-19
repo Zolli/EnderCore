@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.Zolli.EnderCore.Commands.ECCommand;
+import com.Zolli.EnderCore.Commands.consoleMenuBuilder;
 
 public class infoCommand implements ECCommand {
 	
@@ -23,16 +24,6 @@ public class infoCommand implements ECCommand {
 	}
 
 	@Override
-	public boolean isAccessibleFromConsole() {
-		return true;
-	}
-	
-	@Override
-	public boolean isEnabledForOPs() {
-		return true;
-	}
-
-	@Override
 	public List<String> getPermission() {
 		return this.permissions;
 	}
@@ -45,7 +36,13 @@ public class infoCommand implements ECCommand {
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
 		Player pl = (Player) sender;
-		pl.sendMessage("Hello");
+		consoleMenuBuilder m = new consoleMenuBuilder(pl, "EnderCore - Info");
+		m.addMenuItem("/ec info - Display this message");
+		m.addMenuItem("/ec help - Display short help message");
+		m.addMenuItem("/ec purge - Pureg all data in database");
+		m.addMenuItem("/ec status - Display status info");
+		
+		m.build();
 		return false;
 	}
 	
