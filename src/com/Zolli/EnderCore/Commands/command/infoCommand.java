@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.Zolli.EnderCore.Commands.ECCommand;
 import com.Zolli.EnderCore.Commands.consoleMenuBuilder;
@@ -30,11 +29,11 @@ public class infoCommand implements ECCommand {
 
 	@Override
 	public int getArgsLength() {
-		return 0;
+		return 2;
 	}
 	
 	@Override
-	public boolean execute(CommandSender sender, String[] args) {
+	public boolean execute(CommandSender sender, String[] allArgs, String chainedParams) {
 		consoleMenuBuilder m = new consoleMenuBuilder("EnderCore - Info");
 		m.addMenuItem("/ec info - Display this message");
 		m.addMenuItem("/ec help - Display short help message");
@@ -42,6 +41,8 @@ public class infoCommand implements ECCommand {
 		m.addMenuItem("/ec status - Display status info");
 		
 		m.build(sender);
+		
+		System.out.println(chainedParams);
 		return false;
 	}
 	

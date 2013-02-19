@@ -25,12 +25,24 @@ public class commandHandler implements CommandExecutor {
 	public void registerCommand(String name, ECCommand command) {
 		this.handledCommands.put(name, command);
 	}
+	
+	private String buildArgs(String[] str, int length) {
+		int arrayLength = str.length;
+		String param = "";
+		for(int i = length+1 ; i < arrayLength ; i++ ) {
+			param = param + str[i] + " ";
+		}
+		
+		return param;
+	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
 		ECCommand command = this.handledCommands.get(arg3[0]);
 		this.commandPermissions = command.getPermission();
-		command.execute(sender, arg3);	
+		String chainedParam = this.buildArgs(arg3, command.getArgsLength());
+		
+		command.execute(sender, arg3, chainedParam);	
 		return false;
 	}
 	

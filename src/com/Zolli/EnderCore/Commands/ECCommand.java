@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 
 public interface ECCommand {
 	
-	public boolean execute(CommandSender sender, String args[]);
+	public boolean execute(CommandSender sender, String args[], String chainedParams);
 	public String getName();
 	public List<String> getPermission();
 	public int getArgsLength();
