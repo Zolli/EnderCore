@@ -2,4 +2,7 @@ about:
   langName: 'English'
   author: 'Zolli'
 
-test: 'Test'
+commands:
+  noPermission: 'You dont have permission to access this command! You need one of the following permission:'
+  noConsole: 'This command must be running as player!'
+  badUsage: 'Bad syntax! Try this:'

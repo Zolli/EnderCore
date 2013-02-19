@@ -11,10 +11,14 @@ import com.Zolli.EnderCore.Commands.consoleMenuBuilder;
 public class infoCommand implements ECCommand {
 	
 	private List<String> permissions = new ArrayList<String>();
+	private List<String> examples = new ArrayList<String>();
 	
 	public infoCommand() {
 		this.permissions.add("ec.basic.info");
 		this.permissions.add("ec.info");
+		
+		this.examples.add("/ec info [param1] [param2]");
+		this.examples.add("/ec info [param1] <param2>");
 	}
 	
 	@Override
@@ -26,10 +30,20 @@ public class infoCommand implements ECCommand {
 	public List<String> getPermission() {
 		return this.permissions;
 	}
-
+	
+	@Override
+	public List<String> getExample() {
+		return this.examples;
+	}
+	
 	@Override
 	public int getArgsLength() {
 		return 2;
+	}
+	
+	@Override
+	public boolean isAccessibleFromConsole() {
+		return false;
 	}
 	
 	@Override

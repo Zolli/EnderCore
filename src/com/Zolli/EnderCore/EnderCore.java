@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.Zolli.EnderCore.Commands.commandHandler;
 import com.Zolli.EnderCore.Commands.command.infoCommand;
 import com.Zolli.EnderCore.Configuration.Configuration;
+import com.Zolli.EnderCore.Economy.economyHandler;
 import com.Zolli.EnderCore.Listeners.blockListener;
 import com.Zolli.EnderCore.Listeners.entityListener;
 import com.Zolli.EnderCore.Listeners.inventoryListener;
@@ -19,6 +20,7 @@ import com.Zolli.EnderCore.Listeners.worldListener;
 import com.Zolli.EnderCore.Localization.localizationManager;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
+import com.Zolli.EnderCore.Permission.permissionHandler;
 import com.Zolli.EnderCore.Storage.Storage;
 import com.Zolli.EnderCore.Storage.storageActions;
 
@@ -80,12 +82,21 @@ public class EnderCore extends JavaPlugin {
 	public commandHandler command;
 	
 	/**
+	 * Permission handler object
+	 */
+	public permissionHandler permission;
+	
+	/**
+	 * Economy handler object
+	 */
+	public economyHandler economy;
+	
+	/**
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
 		this.pluginDescription = getDescription();
 		this.pluginManager = this.getServer().getPluginManager();
-		
 		this.dataFolder = this.getDataFolder();
 		this.logger = new simpleLogger(this.pluginDescription, this.dataFolder, "EnderCore.Log");
 		this.mainConfig = new Configuration(this, "config.yml");
@@ -98,6 +109,8 @@ public class EnderCore extends JavaPlugin {
 		config = mainConfig.config;
 		String driver = config.getString("database.type");
 		
+		this.permission = new permissionHandler(this);
+		this.economy = new economyHandler(this);
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
 		this.dbAction = new storageActions(this.storage);
 		this.local = new localizationManager(this);
