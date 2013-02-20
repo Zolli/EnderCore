@@ -1,7 +1,11 @@
 package com.Zolli.EnderCore;
 
 import java.io.File;
+import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -95,6 +99,8 @@ public class EnderCore extends JavaPlugin {
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
+		
+		/* Fill some variables with objects */
 		this.pluginDescription = getDescription();
 		this.pluginManager = this.getServer().getPluginManager();
 		this.dataFolder = this.getDataFolder();
@@ -106,11 +112,15 @@ public class EnderCore extends JavaPlugin {
 	 * Runs when initialization end (loaded plugin.yml file) 
 	 */
 	public void onEnable() {
+		
+		/* Fill configuration and get some values for future class initialization */
 		config = mainConfig.config;
 		String driver = config.getString("database.type");
 		String debugMode = config.getString("debug.debugStatus");
 		
+		/* Initializing some class depended on previous class initialization */
 		this.logger.setDebug(debugMode);
+		this.detectWords();
 		this.permission = new permissionHandler(this);
 		this.economy = new economyHandler(this);
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
@@ -118,9 +128,11 @@ public class EnderCore extends JavaPlugin {
 		this.local = new localizationManager(this);
 		this.command = new commandHandler(this);
 		
+		/* Registering listeners and commands */
 		this.registerListeners();
 		this.registerCommands();
 		
+		/* Log the successfully initialization */
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
 	}
 	
@@ -128,6 +140,7 @@ public class EnderCore extends JavaPlugin {
 	 * Runs when disabling signal sent
 	 */
 	public void onDisable() {
+		this.mainConfig.saveConfig();
 		this.logger.log(Level.INFO, "Disabling...");
 	}
 	
@@ -158,6 +171,31 @@ public class EnderCore extends JavaPlugin {
 	public Configuration initializeFlatfile() {
 		this.storageConfig = new Configuration(this, "storage.yml");
 		return this.storageConfig;
+	}
+	
+	/**
+	 * Get all worlds and get the main world name and nether name
+	 * Save the config when main world name contains the default value
+	 */
+	public void detectWords() {
+		List<World> worlds = Bukkit.getServer().getWorlds();
+		String mainWorld = worlds.get(0).getName();
+		String netherWorld = null;
+		
+		for(World w : worlds) {
+			if(w.getEnvironment().equals(Environment.NETHER)) {
+				netherWorld = w.getName();
+			}
+		}
+		
+		if(this.config.getString("worlds.mainWorld").equalsIgnoreCase("defaultWorld")) {
+			this.logger.log(Level.WARNING, "World names does not set properly. Detecting worlds automatically for You");
+			this.logger.log(Level.CONFIG, "Detected main world, with the following name: " + mainWorld);
+			this.logger.log(Level.CONFIG, "Detected nether world, with the following name: " + netherWorld);
+			
+			this.config.set("worlds.mainWorld", mainWorld);
+			this.config.set("worlds.netherWorld", netherWorld);
+		}
 	}
 	
 }

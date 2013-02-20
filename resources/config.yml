@@ -23,3 +23,7 @@ database:
 
 debug:
   debugStatus: 'false'
+  
+worlds:
+  mainWorld: 'defaultWorld'
+  netherWorld: 'defaultNether'
