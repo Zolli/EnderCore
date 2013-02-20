@@ -38,9 +38,10 @@ public class storageActions {
 			case SQLITE:
 			case H2DB:
 				try {
-					PreparedStatement pstmt = conn.prepareStatement("INSERT INTO `players` (playerName,dragonDefeated) VALUES(?, ?)");
+					PreparedStatement pstmt = conn.prepareStatement("INSERT INTO `players` (playerName,dragonDefeated, specialTags) VALUES(?, ?, ?)");
 					pstmt.setString(1, pl.getName());
 					pstmt.setString(2, "0");
+					pstmt.setString(3, "");
 					pstmt.executeUpdate();
 					return true;
 				} catch (SQLException e) {
