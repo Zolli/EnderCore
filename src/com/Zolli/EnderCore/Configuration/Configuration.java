@@ -2,6 +2,7 @@ package com.Zolli.EnderCore.Configuration;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -105,6 +106,14 @@ public class Configuration {
 		try {
 			config.load(this.configFile);
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveConfig() {
+		try {
+			this.config.save(configFile);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
