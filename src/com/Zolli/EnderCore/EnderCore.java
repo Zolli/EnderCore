@@ -108,7 +108,9 @@ public class EnderCore extends JavaPlugin {
 	public void onEnable() {
 		config = mainConfig.config;
 		String driver = config.getString("database.type");
+		String debugMode = config.getString("debug.debugStatus");
 		
+		this.logger.setDebug(debugMode);
 		this.permission = new permissionHandler(this);
 		this.economy = new economyHandler(this);
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
@@ -146,7 +148,7 @@ public class EnderCore extends JavaPlugin {
 	 */
 	private void registerCommands() {
 		this.getCommand("ec").setExecutor(this.command);
-		this.command.registerCommand("info", new infoCommand());
+		this.command.registerCommand("info", new infoCommand(this));
 	}
 	
 	/**

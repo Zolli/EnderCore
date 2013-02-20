@@ -20,3 +20,6 @@ database:
   name : 'test'
   username: 'root'
   password: ''
+
+debug:
+  debugStatus: 'false'

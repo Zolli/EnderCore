@@ -20,6 +20,11 @@ public class simpleLogger {
 	private boolean logToConsole;
 	
 	/**
+	 * Defines debug mode status
+	 */
+	private String debugMode;
+	
+	/**
 	 * Store log prefix
 	 */
 	private String logPrefix;
@@ -51,6 +56,14 @@ public class simpleLogger {
 		
 		this.fileUtils = new fileUtils(this.logFile);
 		this.logPrefix = "[" + pdFile.getName() + "]";
+	}
+	
+	/**
+	 * Toggling debug mode
+	 * @param v Debug mode status
+	 */
+	public void setDebug(String v) {
+		this.debugMode = v;
 	}
 	
 	/**
@@ -110,14 +123,21 @@ public class simpleLogger {
 	public void log(Level l, String message) {
 		String output = this.logPrefix + "[" + l.getName() + "] " + message;
 		
-		if(this.logToConsole) {
+		if((l.equals(Level.DEBUG)) && (this.debugMode.equalsIgnoreCase("true"))) {
 			System.out.println(output);
-		}
-		
-		if(this.logToFile) {
 			Date dateObject = new Date();
 			String date = "[" + dateObject.toLocaleString() + "]";
 			this.fileUtils.writeLineToEnd(date + output);
+		} else {
+			if((this.logToConsole) && !(l.equals(Level.DEBUG))) {
+				System.out.println(output);
+			}
+			
+			if((this.logToFile) && !(l.equals(Level.DEBUG))) {
+				Date dateObject = new Date();
+				String date = "[" + dateObject.toLocaleString() + "]";
+				this.fileUtils.writeLineToEnd(date + output);
+			}
 		}
 	}
 	
@@ -125,7 +145,7 @@ public class simpleLogger {
 	 * Available log levels
 	 */
 	public enum Level {
-		SERVER("Server"), WARNING("Warning"), INFO("Info"), CONFIG("Config"), FINE("Fine"), FINER("Finer"), FINEST("Finest");
+		DEBUG("Debug"), SERVER("Server"), WARNING("Warning"), INFO("Info"), CONFIG("Config"), FINE("Fine"), FINER("Finer"), FINEST("Finest");
 		private String name;
 		
 		/**
