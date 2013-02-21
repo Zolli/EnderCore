@@ -2,21 +2,24 @@ package com.Zolli.EnderCore.Utils;
 
 import org.bukkit.entity.Player;
 
-public class ECPlayer {
+import com.Zolli.EnderCore.EnderCore;
+
+public class ECPlayer  {
 
 	private Player player;
+	EnderCore plugin;
 	
-	public ECPlayer(Player pl) {
+	public ECPlayer(Player pl, EnderCore instance) {
 		this.player = pl;
+		this.plugin = instance;
 	}
 	
 	public Player getPlayer() {
 		return this.player;
 	}
 
-	public void isDragonDefeted() {
-		System.out.println("Call");
-		
+	public boolean isDragonDefeted() {
+		return this.plugin.dbAction.getDefeatStatus(this.player.getName());
 	}
 
 }

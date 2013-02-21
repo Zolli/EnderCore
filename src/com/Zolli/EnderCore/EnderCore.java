@@ -173,6 +173,10 @@ public class EnderCore extends JavaPlugin {
 		return this.storageConfig;
 	}
 	
+	public EnderCore getCore() {
+		return this;
+	}
+	
 	/**
 	 * Get all worlds and get the main world name and nether name
 	 * Save the config when main world name contains the default value
@@ -180,21 +184,21 @@ public class EnderCore extends JavaPlugin {
 	public void detectWords() {
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		String mainWorld = worlds.get(0).getName();
-		String netherWorld = null;
+		String endWorld = null;
 		
 		for(World w : worlds) {
-			if(w.getEnvironment().equals(Environment.NETHER)) {
-				netherWorld = w.getName();
+			if(w.getEnvironment().equals(Environment.THE_END)) {
+				endWorld = w.getName();
 			}
 		}
 		
 		if(this.config.getString("worlds.mainWorld").equalsIgnoreCase("defaultWorld")) {
 			this.logger.log(Level.WARNING, "World names does not set properly. Detecting worlds automatically for You");
 			this.logger.log(Level.CONFIG, "Detected main world, with the following name: " + mainWorld);
-			this.logger.log(Level.CONFIG, "Detected nether world, with the following name: " + netherWorld);
+			this.logger.log(Level.CONFIG, "Detected nether world, with the following name: " + endWorld);
 			
 			this.config.set("worlds.mainWorld", mainWorld);
-			this.config.set("worlds.netherWorld", netherWorld);
+			this.config.set("worlds.endWorld", endWorld);
 		}
 	}
 	

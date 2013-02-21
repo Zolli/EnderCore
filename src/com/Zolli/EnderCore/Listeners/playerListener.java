@@ -22,9 +22,9 @@ public class playerListener implements Listener {
 	String mainWorld = null;
 	
 	/**
-	 * Nether world name
+	 * End world name
 	 */
-	String netherWorld = null;
+	String endWorld = null;
 	
 	/**
 	 * Constructor
@@ -33,7 +33,7 @@ public class playerListener implements Listener {
 	public playerListener(EnderCore instance) {
 		this.plugin = instance;
 		this.mainWorld = this.plugin.config.getString("worlds.mainWorld");
-		this.netherWorld = this.plugin.config.getString("worlds.netherWorld");
+		this.endWorld = this.plugin.config.getString("worlds.endWorld");
 	}
 	
 	/**
@@ -58,13 +58,17 @@ public class playerListener implements Listener {
 	@EventHandler
 	public void goNether(PlayerChangedWorldEvent e) {
 		Player pl = e.getPlayer();
-		ECPlayer epl = new ECPlayer(pl);
+		ECPlayer epl = new ECPlayer(pl, plugin);
 		String fromWorld = e.getFrom().getName();
 		String toWorld = pl.getWorld().getName();
 		
 		/* If player traveling to the nether world */
-		if(toWorld.equalsIgnoreCase(this.netherWorld)) {
-			epl.isDragonDefeted();
+		if(toWorld.equalsIgnoreCase(this.endWorld)) {
+			if(epl.isDragonDefeted()) {
+				System.out.println("Igen");
+			} else {
+				System.out.println("Nem");
+			}
 		}
 	}
 	
