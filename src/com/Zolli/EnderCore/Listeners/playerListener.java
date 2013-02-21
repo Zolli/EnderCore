@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.Zolli.EnderCore.EnderCore;
+import com.Zolli.EnderCore.Events.playerTravelEnderEvent;
 import com.Zolli.EnderCore.Utils.ECPlayer;
 
 public class playerListener implements Listener {
@@ -59,11 +60,13 @@ public class playerListener implements Listener {
 	public void goNether(PlayerChangedWorldEvent e) {
 		Player pl = e.getPlayer();
 		ECPlayer epl = new ECPlayer(pl, plugin);
-		String fromWorld = e.getFrom().getName();
 		String toWorld = pl.getWorld().getName();
 		
 		/* If player traveling to the nether world */
 		if(toWorld.equalsIgnoreCase(this.endWorld)) {
+			playerTravelEnderEvent travelEvent = new playerTravelEnderEvent(pl, pl.getWorld(), e.getFrom(), epl.isDragonDefeted());
+			plugin.pluginManager.callEvent(travelEvent);
+			
 			if(epl.isDragonDefeted()) {
 				System.out.println("Igen");
 			} else {
