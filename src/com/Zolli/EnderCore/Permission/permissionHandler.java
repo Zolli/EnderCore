@@ -18,9 +18,10 @@ import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import com.Zolli.EnderCore.EnderCore;
+import com.Zolli.EnderCore.API.IPermission;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 
-public class permissionHandler {
+public class permissionHandler implements IPermission {
 	
 	EnderCore plugin;
 	PermissionManager pexPlugin;

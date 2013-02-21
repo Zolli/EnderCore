@@ -9,6 +9,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.Zolli.EnderCore.EnderCore;
+import com.Zolli.EnderCore.API.IEconomy;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.earth2me.essentials.Essentials;
 import com.iCo6.iConomy;
@@ -16,7 +17,7 @@ import com.iCo6.system.Accounts;
 
 import cosine.boseconomy.BOSEconomy;
 
-public class economyHandler {
+public class economyHandler implements IEconomy {
 	
 	EnderCore plugin;
 	Essentials essEco;

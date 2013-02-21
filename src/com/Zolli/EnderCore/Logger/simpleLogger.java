@@ -5,9 +5,10 @@ import java.util.Date;
 
 import org.bukkit.plugin.PluginDescriptionFile;
 
+import com.Zolli.EnderCore.API.ILogger;
 import com.Zolli.EnderCore.File.fileUtils;
 
-public class simpleLogger {
+public class simpleLogger implements ILogger {
 	
 	/**
 	 * Defines the class write the log content to file

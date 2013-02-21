@@ -10,10 +10,11 @@ import java.util.Map;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import com.Zolli.EnderCore.API.IPlayerAction;
 import com.Zolli.EnderCore.Storage.Storage.storageEngine;
 import com.Zolli.EnderCore.Utils.tagHelper;
 
-public class storageActions {
+public class storageActions implements IPlayerAction {
 
 	private Storage storage;
 	private Connection conn;
@@ -82,6 +83,36 @@ public class storageActions {
 				break;
 		default:
 			break;
+		}
+		return false;
+	}
+	
+	public boolean getDefeatStatus(String name) {
+		switch(this.selectedEngine) {
+			case MySQL:
+			case SQLITE:
+			case H2DB:
+				try {
+					PreparedStatement pstmt = conn.prepareStatement("SELECT dragonDefeated FROM `players` WHERE playerName=? LIMIT 1");
+					pstmt.setString(1, name);
+					ResultSet rs = pstmt.executeQuery();
+					int result = 0;
+					
+					while(rs.next()) {
+						result = rs.getInt(1);
+					}
+					
+					if(result == 1) {
+						return true;
+					} else {
+						return false;
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			default:
+				break;
 		}
 		return false;
 	}

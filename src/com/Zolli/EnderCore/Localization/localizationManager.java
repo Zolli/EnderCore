@@ -8,9 +8,10 @@ import java.io.OutputStream;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.Zolli.EnderCore.EnderCore;
+import com.Zolli.EnderCore.API.ILocalization;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 
-public class localizationManager {
+public class localizationManager implements ILocalization{
 	
 	/**
 	 * Plugin main class
