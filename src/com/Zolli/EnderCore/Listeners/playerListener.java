@@ -85,7 +85,7 @@ public class playerListener implements Listener {
 			
 			/* If enough number of dragon in the ender */
 			if(plugin.config.getInt("dragons.desiredDragonCount") >= plugin.config.getInt("dragons.desiredDragonCount")) {
-				pl.sendMessage("Hajrá :)");
+				pl.sendMessage("Start :)");
 			} else {
 				pl.teleport(plugin.getServer().getWorld(plugin.config.getString("worlds.endWorld")).getSpawnLocation());
 			}
