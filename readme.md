@@ -9,10 +9,21 @@ This plugin comes with additinal build script. This script runs by [Ant](http://
 	cd /your/project/directory/root/
 	ant -buildfile build.xml
 
+##Automated builds
+
+All build available through jenkins. My Jenkins instance available at [this link.](http://185.14.184.66:8080/job/EnderCore/ "Ender Core")
+Latest build status:
+
+[![Build Status](http://185.14.184.66:8080/job/EnderCore/badge/icon)](http://185.14.184.66:8080/job/EnderCore/)
+
+##Bugtracker
+
+If You found a bug, feel free to report at My [bug tracker.](http://185.14.184.66/bugtracker/thebuggenie "Bugtracker")
+
 ##Documentation
 
-Documentation available through jenkins, its generated on all sucessfull build.
-[Ant](http://ant.apache.org/ "Ant Site")
+Jenkins generates Dxygen documentation for this project on all sucessfull build. 
+All build documentation archived on this server, browse old, or read the [newest one.](http://185.14.184.66:8080/job/EnderCore/EnderCore_Documentation/ "Documentation")
 
 ##Contributing
 
