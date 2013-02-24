@@ -1,5 +1,8 @@
 package com.Zolli.EnderCore.Listeners;
 
+import org.bukkit.World;
+import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,10 +49,23 @@ public class playerListener implements Listener {
 	public void playerJoin(PlayerJoinEvent e) {
 		Player pl = e.getPlayer();
 		boolean played = pl.hasPlayedBefore();
+		int dragonCount = 0;
 
+		/* Write player to database if is joined the server first time */
 		if(!played) {
 			plugin.dbAction.addPlayer(pl);
 		}
+		/* END */
+		
+		/* Detecting ender dragons count on ender, and write it to settings */
+		World ender = plugin.getServer().getWorld(this.endWorld);
+		for(Entity ent : ender.getEntities()) {
+			if(ent instanceof EnderDragon) {
+				dragonCount++;
+			}
+		}
+		plugin.ffStorage.set("localSettings.dragonCount", dragonCount);
+		/* END */
 	}
 	
 	/**
@@ -62,17 +78,20 @@ public class playerListener implements Listener {
 		ECPlayer epl = new ECPlayer(pl, plugin);
 		String toWorld = pl.getWorld().getName();
 		
-		/* If player traveling to the nether world */
+		/* If player traveling to the ender world */
 		if(toWorld.equalsIgnoreCase(this.endWorld)) {
 			playerTravelEnderEvent travelEvent = new playerTravelEnderEvent(pl, pl.getWorld(), e.getFrom(), epl.isDragonDefeted());
 			plugin.pluginManager.callEvent(travelEvent);
 			
-			if(epl.isDragonDefeted()) {
-				System.out.println("Igen");
+			/* If enough number of dragon in the ender */
+			if(plugin.config.getInt("dragons.desiredDragonCount") >= plugin.config.getInt("dragons.desiredDragonCount")) {
+				pl.sendMessage("Hajrá :)");
 			} else {
-				System.out.println("Nem");
+				pl.teleport(plugin.getServer().getWorld(plugin.config.getString("worlds.endWorld")).getSpawnLocation());
 			}
+			/* END */
 		}
+		/* END */
 	}
 	
 }

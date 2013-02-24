@@ -21,9 +21,12 @@ database:
   username: 'root'
   password: ''
 
+dragons:
+  desiredDragonCount: '1'
+
 debug:
   debugStatus: 'false'
   
 worlds:
   mainWorld: 'defaultWorld'
-  netherWorld: 'defaultNether'
+  endWorld: 'defaultNether'
