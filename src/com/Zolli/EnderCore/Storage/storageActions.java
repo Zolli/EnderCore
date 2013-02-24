@@ -29,7 +29,7 @@ public class storageActions implements IPlayerAction {
 		conn = this.storage.getConnection();
 		
 		if(selectedEngine.equals(storageEngine.FLATFILE)) {
-			this.ffStorage = storage.getFfStorage();
+			this.ffStorage = storage.getFlatFileStorage();
 		}
 	}
 	

@@ -66,6 +66,11 @@ public class EnderCore extends JavaPlugin {
 	public YamlConfiguration config;
 	
 	/**
+	 * FaltFileStorage object
+	 */
+	public YamlConfiguration ffStorage;
+	
+	/**
 	 * Storage engine class
 	 */
 	public Storage storage;
@@ -127,6 +132,7 @@ public class EnderCore extends JavaPlugin {
 		this.dbAction = new storageActions(this.storage);
 		this.local = new localizationManager(this);
 		this.command = new commandHandler(this);
+		this.ffStorage = this.storage.getFlatFileStorage();
 		
 		/* Registering listeners and commands */
 		this.registerListeners();
@@ -171,10 +177,6 @@ public class EnderCore extends JavaPlugin {
 	public Configuration initializeFlatfile() {
 		this.storageConfig = new Configuration(this, "storage.yml");
 		return this.storageConfig;
-	}
-	
-	public EnderCore getCore() {
-		return this;
 	}
 	
 	/**

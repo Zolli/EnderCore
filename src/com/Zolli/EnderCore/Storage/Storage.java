@@ -120,10 +120,10 @@ public class Storage {
 	}
 	
 	/**
-	 * Return the flat file storage object
-	 * @return Flat file storage object
+	 * Return the initialized YamlConfiguration object
+	 * @return FaltFile storage object
 	 */
-	public YamlConfiguration getFfStorage() {
+	public YamlConfiguration getFlatFileStorage() {
 		return this.ffStorage;
 	}
 	
@@ -173,6 +173,7 @@ public class Storage {
 				File driver = new File("./lib" + File.separator + this.selectedEngine.getFileName());
 				this.loadExternalDriver(driver);
 				Class.forName("com.mysql.jdbc.Driver");
+				this.ffStorage = this.plugin.initializeFlatfile().config;
 				logger.log(Level.INFO, "Initialized MySQL storage engine!");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -182,6 +183,7 @@ public class Storage {
 				File driver = new File("./lib" + File.separator + this.selectedEngine.getFileName());
 				this.loadExternalDriver(driver);
 				Class.forName("org.sqlite.JDBC");
+				this.ffStorage = this.plugin.initializeFlatfile().config;
 				logger.log(Level.INFO, "Initialized SQLite storage engine!");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -191,6 +193,7 @@ public class Storage {
 				File driver = new File("./lib" + File.separator + this.selectedEngine.getFileName());
 				this.loadExternalDriver(driver);
 				Class.forName("org.h2.Driver");
+				this.ffStorage = this.plugin.initializeFlatfile().config;
 				logger.log(Level.INFO, "Initialized H2 Database storage engine!");
 			} catch (Exception e) {
 				logger.log(Level.WARNING, "H2 Dtabase driver not found!");
