@@ -1,12 +1,13 @@
 package com.Zolli.EnderCore.Utils;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class networkUtils {
@@ -17,32 +18,42 @@ public class networkUtils {
 	 * Download The file at given url, and save to specified location
 	 * @param Url The url from file is downloaded
 	 * @param saveLocation The location on the file is saved
+	 * @return int The download rate
 	 */
-	public void downloadAndSave(String Url, String saveLocation) throws Exception {
-		try {
-			File file = new File(saveLocation);
-			
-			if(!file.exists()) {
-				URL website = new URL(Url);
-			    this.rbc = Channels.newChannel(website.openStream());
-			}
-		} catch (Exception e) {
-			new Exception("Failed to retrieve file from definied location!");
-		}
+	public int downloadAndSave(String Url, String saveLocation) throws Exception {
+		BufferedInputStream in = null;
+		BufferedOutputStream out = null;
+		File fl = new File(saveLocation);
+		int transferRate = 0;
 		
-		try {
-			File file = new File(saveLocation);
+		if(!fl.exists()) {
+			fl.getParentFile().mkdirs();
+			byte[] buffer = new byte[1024];
+			int byteRead = 0;
 			
-			if(!file.exists()) {
-				file.getParentFile().mkdirs();
-				FileOutputStream fos = new FileOutputStream(saveLocation);
-			    fos.getChannel().transferFrom(rbc, 0, 1 << 24);
-			    fos.flush();
-			    fos.close();
+			try {
+				URL url = new URL(Url);
+				URLConnection conn = url.openConnection();
+				conn.connect();
+				int fileLength = conn.getContentLength();
+				in = new BufferedInputStream(url.openStream());
+				out = new BufferedOutputStream(new FileOutputStream(fl));
+	
+				long startTime = System.nanoTime();
+				while((byteRead = in.read(buffer)) != -1) {
+					out.write(buffer, 0, byteRead);
+				}
+				long endTime = System.nanoTime();
+				transferRate = (int) ((endTime-startTime)/fileLength);
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				out.flush();
+				out.close();
+				in.close();
 			}
-		} catch (Exception e) {
-			new Exception("Failed to save the downloaded file!");
 		}
+		return transferRate;
 	}
 	
 	/**

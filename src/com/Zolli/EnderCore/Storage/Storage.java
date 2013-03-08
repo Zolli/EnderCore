@@ -246,7 +246,9 @@ public class Storage {
 	 */
 	private void downloadDriver(String Url, String savedFileName) {
 		try {
-			this.nu.downloadAndSave(Url, "./lib" + File.separator + savedFileName);
+			this.plugin.logger.log(Level.INFO, "Started downloading the following file: " + this.selectedEngine.getFileName());
+			int downloadRate = this.nu.downloadAndSave(Url, "./lib" + File.separator + savedFileName);
+			this.plugin.logger.log(Level.INFO, "Download successfully. Average download rate is: " + downloadRate + "Kb/s");
 		} catch (Exception e) {
 			e.getMessage();
 			e.printStackTrace();
