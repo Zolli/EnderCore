@@ -65,6 +65,10 @@ public class commandHandler implements CommandExecutor {
 	 * @return Boolean False if CommandSender does not have the defined permission
 	 */
 	private boolean checkPerm(List<String> nodes, CommandSender sender) {
+		if(sender instanceof ConsoleCommandSender) {
+			return true;
+		}
+		
 		for(String node : nodes) {
 			if(!this.plugin.permission.has(sender, node)) {
 				sender.sendMessage(this.plugin.local.getLocalizedString("commands.noPermission"));
