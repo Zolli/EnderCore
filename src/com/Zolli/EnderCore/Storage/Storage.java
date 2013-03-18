@@ -21,11 +21,6 @@ import com.Zolli.EnderCore.Utils.networkUtils;
 public class Storage {
 	
 	/**
-	 * Network utils object
-	 */
-	private networkUtils nu;
-	
-	/**
 	 * Defines the selected storageEngine
 	 */
 	private storageEngine selectedEngine;
@@ -69,7 +64,6 @@ public class Storage {
 	 */
 	public Storage(EnderCore instance, String driver, File dataFolder, FileConfiguration config, simpleLogger log) {
 		this.plugin = instance;
-		this.nu = new networkUtils();
 		storageEngine engine = null;
 		
 		if(driver.equalsIgnoreCase(storageEngine.MySQL.getName())) {
@@ -246,9 +240,7 @@ public class Storage {
 	 */
 	private void downloadDriver(String Url, String savedFileName) {
 		try {
-			this.plugin.logger.log(Level.INFO, "Started downloading the following file: " + this.selectedEngine.getFileName());
-			int downloadRate = this.nu.downloadAndSave(Url, "./lib" + File.separator + savedFileName);
-			this.plugin.logger.log(Level.INFO, "Download successfully. Average download rate is: " + downloadRate + "Kb/s");
+			networkUtils.downloadAndSave(Url, "./lib" + File.separator + savedFileName, this.plugin.logger);
 		} catch (Exception e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -264,9 +256,9 @@ public class Storage {
 	}
 	
 	public enum storageEngine {
-		SQLITE("sqlite", "http://mc.coldline.hu/zolli/lib/sqliteConnector.jar", "sqlite.jar"),
-		MySQL("mysql",  "http://mc.coldline.hu/zolli/lib/mysqlConnector.jar", "mysql.jar"),
-		H2DB("h2", "http://mc.coldline.hu/zolli/lib/h2Connector.jar", "h2.jar"),
+		SQLITE("sqlite", "http://cdn.zolli.tk/minecraft/lib/sqliteConnector.jar", "sqlite.jar"),
+		MySQL("mysql",  "http://cdn.zolli.tk/minecraft/mysqlConnector.jar", "mysql.jar"),
+		H2DB("h2", "http://cdn.zolli.tk/minecraft/lib/h2Connector.jar", "h2.jar"),
 		FLATFILE("flatfile", "none", "none"),
 		NBT("nbt", "none", "none");
 		

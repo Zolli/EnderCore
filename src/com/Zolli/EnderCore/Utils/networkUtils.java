@@ -10,6 +10,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.ReadableByteChannel;
 
+import com.Zolli.EnderCore.Logger.simpleLogger;
+import com.Zolli.EnderCore.Logger.simpleLogger.Level;
+
 public class networkUtils {
 	
 	protected ReadableByteChannel rbc;
@@ -20,13 +23,14 @@ public class networkUtils {
 	 * @param saveLocation The location on the file is saved
 	 * @return int The download rate
 	 */
-	public int downloadAndSave(String Url, String saveLocation) throws Exception {
+	public static int downloadAndSave(String Url, String saveLocation, simpleLogger logger) throws Exception {
 		BufferedInputStream in = null;
 		BufferedOutputStream out = null;
 		File fl = new File(saveLocation);
 		int transferRate = 0;
 		
 		if(!fl.exists()) {
+			logger.log(Level.INFO, "Started downloading the following file: " + Url);
 			fl.getParentFile().mkdirs();
 			byte[] buffer = new byte[1024];
 			int byteRead = 0;
@@ -51,6 +55,7 @@ public class networkUtils {
 				out.flush();
 				out.close();
 				in.close();
+				logger.log(Level.INFO, "Download successfully. Average download rate is: " + transferRate + "Kb/s");
 			}
 		}
 		return transferRate;

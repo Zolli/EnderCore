@@ -33,15 +33,15 @@
 	</target>
 	
 	<target name="get_libs" depends="init">
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/Bukkit.jar" dest="${lib}/${bukkit}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/CraftBukkit.jar" dest="${lib}/${craftBukkit}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/Vault.jar" dest="${lib}/${Vault}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/PermissionsEx.jar" dest="${lib}/${PEX}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/EssentialsGroupManager.jar" dest="${lib}/${GM}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/Essentials.jar" dest="${lib}/${ESS}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/iConomy_V6.jar" dest="${lib}/${ICON6}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/iConomy_V8.jar" dest="${lib}/${ICON8}" usetimestamp="true"/>
-		<get src="http://mc.coldline.hu/zolli/${libsVer}/BOSEconomy.jar" dest="${lib}/${BOSE}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/Bukkit.jar" dest="${lib}/${bukkit}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/CraftBukkit.jar" dest="${lib}/${craftBukkit}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/Vault.jar" dest="${lib}/${Vault}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/PermissionsEx.jar" dest="${lib}/${PEX}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/EssentialsGroupManager.jar" dest="${lib}/${GM}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/Essentials.jar" dest="${lib}/${ESS}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/iConomy_V6.jar" dest="${lib}/${ICON6}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/iConomy_V8.jar" dest="${lib}/${ICON8}" usetimestamp="true"/>
+		<get src="http://cdn.zolli.tk/minecraft/${libsVer}/BOSEconomy.jar" dest="${lib}/${BOSE}" usetimestamp="true"/>
 	</target>
 	
 	<target name="compile" depends="get_libs">
