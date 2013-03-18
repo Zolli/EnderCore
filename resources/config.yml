@@ -21,6 +21,11 @@ database:
   username: 'root'
   password: ''
 
+updater:
+  updateChannel: 'STABLE'
+  autoUpdate: 'true'
+  notifyUpdate: 'true'
+
 dragons:
   desiredDragonCount: '1'
 

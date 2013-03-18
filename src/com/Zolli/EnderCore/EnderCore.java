@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.Zolli.EnderCore.Commands.commandHandler;
 import com.Zolli.EnderCore.Commands.command.infoCommand;
+import com.Zolli.EnderCore.Commands.command.updateCommand;
 import com.Zolli.EnderCore.Configuration.Configuration;
 import com.Zolli.EnderCore.Economy.economyHandler;
 import com.Zolli.EnderCore.Listeners.blockListener;
@@ -27,6 +28,8 @@ import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Permission.permissionHandler;
 import com.Zolli.EnderCore.Storage.Storage;
 import com.Zolli.EnderCore.Storage.storageActions;
+import com.Zolli.EnderCore.Updater.updateChecker;
+import com.Zolli.EnderCore.Updater.updateDownloaderThread;
 
 public class EnderCore extends JavaPlugin {
 	
@@ -53,7 +56,7 @@ public class EnderCore extends JavaPlugin {
 	/**
 	 * PluginDescriptionFile object
 	 */
-	private PluginDescriptionFile pluginDescription;
+	public PluginDescriptionFile pluginDescription;
 	
 	/**
 	 * Location of plugin data folder
@@ -101,6 +104,11 @@ public class EnderCore extends JavaPlugin {
 	public economyHandler economy;
 	
 	/**
+	 * updateChecker object
+	 */
+	public updateChecker updater;
+	
+	/**
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
@@ -139,6 +147,8 @@ public class EnderCore extends JavaPlugin {
 		this.registerCommands();
 		
 		/* Log the successfully initialization */
+		
+		this.updater = new updateChecker(this);
 		this.logger.log(Level.INFO, "Sucessfully enabled!");
 	}
 	
@@ -168,6 +178,7 @@ public class EnderCore extends JavaPlugin {
 	private void registerCommands() {
 		this.getCommand("ec").setExecutor(this.command);
 		this.command.registerCommand("info", new infoCommand(this));
+		this.command.registerCommand("update", new updateCommand(this));
 	}
 	
 	/**
