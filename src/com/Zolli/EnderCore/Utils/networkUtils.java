@@ -23,7 +23,8 @@ public class networkUtils {
 	 * @param saveLocation The location on the file is saved
 	 * @return int The download rate
 	 */
-	public static int downloadAndSave(String Url, String saveLocation, simpleLogger logger) throws Exception {
+	@SuppressWarnings("finally")
+	public static boolean downloadAndSave(String Url, String saveLocation, simpleLogger logger) throws Exception {
 		BufferedInputStream in = null;
 		BufferedOutputStream out = null;
 		File fl = new File(saveLocation);
@@ -51,14 +52,16 @@ public class networkUtils {
 				transferRate = (int) ((endTime-startTime)/fileLength);
 			} catch(Exception e) {
 				e.printStackTrace();
+				return false;
 			} finally {
 				out.flush();
 				out.close();
 				in.close();
 				logger.log(Level.INFO, "Download successfully. Average download rate is: " + transferRate + "Kb/s");
+				return true;
 			}
 		}
-		return transferRate;
+		return true;
 	}
 	
 	/**
