@@ -30,30 +30,30 @@ public class updateCommand implements ECCommand {
 		/* STATUS subcommand */
 		if(args[1].equalsIgnoreCase("status")) {
 			if(this.plugin.updater.getResult().equals(updateResult.SUCCESS)) {
-				sender.sendMessage("An update is already downloaded. Please restart, or reload the server to take effect");
+				sender.sendMessage(this.plugin.local.getLocalizedString("updater.sucessDownload"));
 			} else if(this.plugin.updater.getResult().equals(updateResult.FAILED_TO_DOWNLOAD)) {
-				sender.sendMessage("An update is available, but the latest download attemp is failed. Sent notification to plugin developer!");
+				sender.sendMessage(this.plugin.local.getLocalizedString("updater.failedDownload"));
 			} else if(this.plugin.updater.getResult().equals(updateResult.FAILED_CHECK)) {
-				sender.sendMessage("An error has occurred while checking for updates. Sent notification to plugin developer!");
+				sender.sendMessage(this.plugin.local.getLocalizedString("updater.failedCheck"));
 			} else if(this.plugin.updater.getResult().equals(updateResult.UPDATE_AVAILABLE)) {
-				sender.sendMessage("An update available for this plugin.");
-				sender.sendMessage("Use /ec update download command to download this update");
+				sender.sendMessage(this.plugin.local.getLocalizedString("updater.updateAvailable1"));
+				sender.sendMessage(this.plugin.local.getLocalizedString("updater.updateAvailable2"));
 			} else {
-				sender.sendMessage("No update available for this plugin in current channel!");
+				sender.sendMessage(this.plugin.local.getLocalizedString("updater.noUpdate"));
 			}
 		/* DOWNLOAD subcommand */
 		} else if(args[1].equalsIgnoreCase("download")) {
 			if(this.plugin.updater.getResult().equals(updateResult.UPDATE_AVAILABLE)) {
 				this.plugin.updater.downloadUpdate();
 			} else {
-				sender.sendMessage("No UPDATE");
+				sender.sendMessage(this.plugin.local.getLocalizedString("updater.noUpdate"));
 			}
 		/* CHANGELOG subcommand */
 		} else if(args[1].equalsIgnoreCase("changelog")) {
 			sender.sendMessage(this.plugin.updater.getChangelog());
 		/* Channel subcommand */
 		} else if(args[1].equalsIgnoreCase("channel")) {
-			sender.sendMessage("You are receivering updates from the following update channel: " + this.plugin.updater.getChannel());
+			sender.sendMessage(this.plugin.local.getLocalizedString("updater.channelInfo").replace("#CHANNEL#", this.plugin.updater.getChannel()));
 		}
 		return false;
 	}
