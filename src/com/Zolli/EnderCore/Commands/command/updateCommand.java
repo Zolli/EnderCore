@@ -45,6 +45,10 @@ public class updateCommand implements ECCommand {
 		} else if(args[1].equalsIgnoreCase("download")) {
 			if(this.plugin.updater.getResult().equals(updateResult.UPDATE_AVAILABLE)) {
 				this.plugin.updater.downloadUpdate();
+				
+				if(this.plugin.updater.getResult().equals(updateResult.SUCCESS)) {
+					sender.sendMessage(this.plugin.local.getLocalizedString("updater.sucessDownloadMessage"));
+				}
 			} else {
 				sender.sendMessage(this.plugin.local.getLocalizedString("updater.noUpdate"));
 			}

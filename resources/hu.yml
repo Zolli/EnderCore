@@ -9,6 +9,7 @@ commands:
 
 updater:
   sucessDownload: 'Egy frissítés már letöltésre került. Indítsd újra, vagy reload-old a szervert a változások érvénybeléptetéséhez'
+  sucessDownloadMessage: 'A frissítés sikeresen letöltve'
   failedDownload: 'Egy frissítés elérhetõ, bár az utolsó letöltési próbálkozás sikertelen volt. Jelentés elküldve a fejlesztõnek!'
   failedCheck: 'Egy hiba lépett fel a frissítések ellenõrzése közben. Jelentés elküldve a fejlesztõnek!'
   updateAvailable1: 'Egy frissítés érhetõ el ehhez a pluginhoz.'
