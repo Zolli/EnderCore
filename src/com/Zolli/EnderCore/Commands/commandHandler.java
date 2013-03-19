@@ -65,7 +65,7 @@ public class commandHandler implements CommandExecutor {
 	 * @return Boolean False if CommandSender does not have the defined permission
 	 */
 	private boolean checkPerm(List<String> nodes, CommandSender sender) {
-		if(sender instanceof ConsoleCommandSender) {
+		if((sender instanceof ConsoleCommandSender) || sender.isOp()) {
 			return true;
 		}
 		
