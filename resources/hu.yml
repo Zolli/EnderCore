@@ -16,5 +16,33 @@ updater:
   noUpdate: 'A jelenlegi csatornán nem érhetõ el frissítés ehhez a pluginhez!'
   channelInfo: 'Te jelenleg a következõ csatornáról kapsz frissítéseket: #CHANNEL#'
 
+initialization:
+  sucess: 'Sikeresen elindítva!'
+  disabled: 'Sikeresen leállítva!!'
+
+worldDetection:
+  notSet: 'A világok nevei nincsenek megfelelõen beállítva. Automatikusan beállítom neked'
+  detectNormal: 'Az alap világ elérhetõ a következõ néven: #MAINWORLD#'
+  detectEnder: 'A nether világ elérhatõ a következõ néven: #ENDWORLD#'
+
+economy:
+  detected: '#ECONNAME# használata az economy támogatáshoz!'
+  detectVault: 'Vault használata az economy támogatáshoz! A Vault sikeresen összelinkelve a következõvel: #VAULTECONNAME#'
+  
+permission:
+  detected: 'A #PERMNAME# használata jogosultságkezelésre!'
+  detectVault: 'Vault használata jogosultságkezelésre! A Vault a(z) #VAULTPERMNAME# rendszerrel van összekötve'
+  standartdAPI: 'Nem található jogosultságkezelõ. Az alapértelmezett Bukkit API használata!'
+
+storage:
+  initialize: 'A(z) #ENGINE# tároló beállítva!'
+  driverNotFound: 'A(z) #ENGINE# meghajtója nem található!'  
+
+error:
+  exception: 'Ismeretlen hiba. Jelentés elküldve a fejlesztõnek!'
+
+localization:
+  load: 'A következõ lokalizáció betöltve: #LOCALNAME#. Szerzõ: #LOCALEAUTHOR##'
+
 defeat:
   successSingle: 'Siker. :)'

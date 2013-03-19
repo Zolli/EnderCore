@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.Zolli.EnderCore.EnderCore;
 import com.Zolli.EnderCore.API.ILocalization;
-import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 
 public class localizationManager implements ILocalization{
 	
@@ -107,7 +106,6 @@ public class localizationManager implements ILocalization{
 		
 		try {
 			this.langConf.load(file);
-			plugin.logger.log(Level.CONFIG, "Loaded the following localization: " + langConf.getString("about.langName") + " By: " + langConf.getString("about.author"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

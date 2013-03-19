@@ -46,7 +46,7 @@ public class economyHandler implements IEconomy {
 				handler = Econs.iCon;
 				iCon = (iConomy) iConPlugin;
 				iConAccounts = new Accounts();
-				plugin.logger.log(Level.INFO, "Using iConomy6 for economy support!");
+				this.plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("economy.detected").replace("#ECONNAME#", "iConomy6"));
 				return;
 			}
 		} else if(pm.isPluginEnabled("BOSEconomy")) {
@@ -55,7 +55,7 @@ public class economyHandler implements IEconomy {
 			if(bosEconPlugin.isEnabled() && bosEconPlugin.getDescription().getVersion().startsWith("0.7")) {
 				handler = Econs.boseCon;
 				bosEcon = (BOSEconomy) bosEconPlugin;
-				plugin.logger.log(Level.INFO, "Using BOSEconomy for economy support!");
+				this.plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("economy.detected").replace("#ECONNAME#", "BOSEconomy"));
 				return;
 			}
 		} else if(pm.isPluginEnabled("Essentials")) {
@@ -64,7 +64,7 @@ public class economyHandler implements IEconomy {
 			if(essEcoPlugin.isEnabled()) {
 				handler = Econs.eEco;
 				essEco = (Essentials) essEcoPlugin;
-				plugin.logger.log(Level.INFO, "Using EssentialsEco for economy support!");
+				this.plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("economy.detected").replace("#ECONNAME#", "Essentials"));
 				return;
 			}
 		} else if(pm.isPluginEnabled("Vault")) {
@@ -73,7 +73,7 @@ public class economyHandler implements IEconomy {
 			if(economyProvider != null) {
 				handler = Econs.Vault;
 				vaultEconomy = economyProvider.getProvider();
-				plugin.logger.log(Level.INFO, "Using Vault for Economy Support! Vault hooked with: " + vaultEconomy.getName());
+				this.plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("economy.detected").replace("#VAULTECONNAME#", vaultEconomy.getName()));
 				return;
 			}
 		}
@@ -102,7 +102,7 @@ public class economyHandler implements IEconomy {
 				try {
 					com.earth2me.essentials.api.Economy.add(playerName, amount);
 				} catch(Exception e) {
-					plugin.logger.log(Level.SERVER, "Unknown exception. See console!");
+					plugin.logger.log(Level.SERVER, this.plugin.local.getLocalizedString("error.exception"));
 					e.printStackTrace();
 				}
 				break;
@@ -135,7 +135,7 @@ public class economyHandler implements IEconomy {
 				try {
 					com.earth2me.essentials.api.Economy.subtract(playerName, amount);
 				} catch(Exception e) {
-					plugin.logger.log(Level.SERVER, "Unknown exception. See console!");
+					plugin.logger.log(Level.SERVER, this.plugin.local.getLocalizedString("error.exception"));
 					e.printStackTrace();
 				}
 				break;
@@ -169,7 +169,7 @@ public class economyHandler implements IEconomy {
 				try {
 					return com.earth2me.essentials.api.Economy.hasEnough(playerName, amount);
 				} catch(Exception e) {
-					plugin.logger.log(Level.SERVER, "Unknown exception. See console!");
+					plugin.logger.log(Level.SERVER, this.plugin.local.getLocalizedString("error.exception"));
 					e.printStackTrace();
 				}
 			case Vault:

@@ -168,7 +168,7 @@ public class Storage {
 				this.loadExternalDriver(driver);
 				Class.forName("com.mysql.jdbc.Driver");
 				this.ffStorage = this.plugin.initializeFlatfile().config;
-				logger.log(Level.INFO, "Initialized MySQL storage engine!");
+				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "MySQL"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -178,7 +178,7 @@ public class Storage {
 				this.loadExternalDriver(driver);
 				Class.forName("org.sqlite.JDBC");
 				this.ffStorage = this.plugin.initializeFlatfile().config;
-				logger.log(Level.INFO, "Initialized SQLite storage engine!");
+				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "SQLite"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
@@ -188,17 +188,17 @@ public class Storage {
 				this.loadExternalDriver(driver);
 				Class.forName("org.h2.Driver");
 				this.ffStorage = this.plugin.initializeFlatfile().config;
-				logger.log(Level.INFO, "Initialized H2 Database storage engine!");
+				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "H2"));
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "H2 Dtabase driver not found!");
+				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.driverNotFound").replace("#ENGINE#", "H2"));
 				e.printStackTrace();
 			} 
 		} else {
 			if(this.selectedEngine.equals(storageEngine.FLATFILE)) {
 				this.ffStorage = this.plugin.initializeFlatfile().config;
-				logger.log(Level.INFO, "Initialized flatfile storage engine!");
+				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "faltfile"));
 			} else {
-				logger.log(Level.INFO, "Initialized NBT storage engine!");
+				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "NBT"));
 			}
 		}
 	}

@@ -43,12 +43,12 @@ public class permissionHandler implements IPermission {
 		if(pm.isPluginEnabled("PermissionsEx")) {
 			handler = Perms.PEX;
 			pexPlugin = PermissionsEx.getPermissionManager();
-			plugin.logger.log(Level.INFO, "Using PermissionsEx to handle permissions!");
+			plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("permission.detected").replace("#PERMNAME#", "PermissionsEx"));
 			return;
 		} else if(pm.isPluginEnabled("GroupManager")) {
 			handler = Perms.GM;
 			gmPlugin = (GroupManager) pm.getPlugin("GroupManager");
-			plugin.logger.log(Level.INFO, "Using GroupManager for permission support!");
+			plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("permission.detected").replace("#PERMNAME#", "GroupManager"));
 			return;
 		} else if(pm.isPluginEnabled("Vault")) {
 			RegisteredServiceProvider<net.milkbowl.vault.permission.Permission> permissionProvider = plugin.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
@@ -56,12 +56,12 @@ public class permissionHandler implements IPermission {
 			if(permissionProvider != null) {
 				vaultPermission = permissionProvider.getProvider();
 				handler = Perms.VAULT;
-				plugin.logger.log(Level.INFO, "Using Vault to handle permissions! Vault linked with: " + vaultPermission.getName());
+				plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("permission.detectVault").replace("#VAULTPERMNAME#", vaultPermission.getName()));
 				return;
 			}
 		} else {
 			handler = Perms.BUKKIT;
-			plugin.logger.log(Level.INFO, "Not found valuable permission system! Using Bukkit standard permission API!");
+			plugin.logger.log(Level.INFO, this.plugin.local.getLocalizedString("permission.standartdAPI"));
 		}
 	}
 

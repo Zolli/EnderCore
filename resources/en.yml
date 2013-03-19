@@ -16,5 +16,33 @@ updater:
   noUpdate: 'No update available for this plugin in current channel!'
   channelInfo: 'You are receivering updates from the following update channel: #CHANNEL#'
 
+initialization:
+  sucess: 'Successfuly enabled!'
+  disabled: 'Disabled successfuly!'
+
+worldDetection:
+  notSet: 'World names does not set properly. Detecting worlds automatically for You'
+  detectNormal: 'Detected main world, with the following name: #MAINWORLD#'
+  detectEnder: 'Detected nether world, with the following name: #ENDWORLD#'
+
+economy:
+  detected: 'Using #ECONNAME# for economy support!'
+  detectVault: 'Using Vault for Economy Support! Vault is hooked with #VAULTECONNAME#'
+
+permission:
+  detected: 'Using #PERMNAME# to handle permissions!'
+  detectVault: 'Using Vault to handle permissions! Vault is hooked with #VAULTPERMNAME#'
+  standartdAPI: 'No valuable permission plugin found. Using Bukkit standard permission API!'
+
+storage:
+  initialize: 'Initialized #ENGINE# storage engine!'
+  driverNotFound: '#ENGINE# database driver not found!'
+
+error:
+  exception: 'Unknown exception. Sent notification to developer!'
+
+localization:
+  load: 'Loaded the following localization: #LOCALNAME#. By: #LOCALEAUTHOR#'
+
 defeat:
   successSingle: 'Siker. :)'

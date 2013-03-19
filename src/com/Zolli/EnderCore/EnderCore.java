@@ -30,6 +30,7 @@ import com.Zolli.EnderCore.Storage.Storage;
 import com.Zolli.EnderCore.Storage.storageActions;
 import com.Zolli.EnderCore.Updater.updateChecker;
 import com.Zolli.EnderCore.Updater.updateDownloaderThread;
+import com.Zolli.EnderCore.Utils.stringUtils;
 
 public class EnderCore extends JavaPlugin {
 	
@@ -119,26 +120,37 @@ public class EnderCore extends JavaPlugin {
 		this.dataFolder = this.getDataFolder();
 		this.logger = new simpleLogger(this.pluginDescription, this.dataFolder, "EnderCore.Log");
 		this.mainConfig = new Configuration(this, "config.yml");
+		config = mainConfig.config;
+		this.local = new localizationManager(this);
 	}
 	
 	/**
 	 * Runs when initialization end (loaded plugin.yml file) 
 	 */
 	public void onEnable() {
+		/* Log the loaded localization */
+		String[] find = {"#LOCALNAME#", "#LOCALEAUTHOR#"};
+		String[] repl = {this.local.getLanguageRealName(), this.local.getLanguageAuthor()};
+		try {
+			this.logger.log(Level.CONFIG, stringUtils.replaceByArray(this.local.getLocalizedString("localization.load"), find, repl));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		/* Fill configuration and get some values for future class initialization */
-		config = mainConfig.config;
 		String driver = config.getString("database.type");
 		String debugMode = config.getString("debug.debugStatus");
 		
-		/* Initializing some class depended on previous class initialization */
+		/* Setting debug mode, based on config value */
 		this.logger.setDebug(debugMode);
+		
+		/* Initializing some class depended on previous class initialization */
 		this.detectWords();
+		this.updater = new updateChecker(this);
 		this.permission = new permissionHandler(this);
 		this.economy = new economyHandler(this);
 		this.storage = new Storage(this, driver, this.dataFolder, this.config, this.logger);
 		this.dbAction = new storageActions(this.storage);
-		this.local = new localizationManager(this);
 		this.command = new commandHandler(this);
 		this.ffStorage = this.storage.getFlatFileStorage();
 		
@@ -147,9 +159,7 @@ public class EnderCore extends JavaPlugin {
 		this.registerCommands();
 		
 		/* Log the successfully initialization */
-		
-		this.updater = new updateChecker(this);
-		this.logger.log(Level.INFO, "Sucessfully enabled!");
+		this.logger.log(Level.INFO, this.local.getLocalizedString("initialization.sucess"));
 	}
 	
 	/**
@@ -157,7 +167,7 @@ public class EnderCore extends JavaPlugin {
 	 */
 	public void onDisable() {
 		this.mainConfig.saveConfig();
-		this.logger.log(Level.INFO, "Disabling...");
+		this.logger.log(Level.INFO, this.local.getLocalizedString("initialization.disabled!"));
 	}
 	
 	/**
@@ -206,9 +216,9 @@ public class EnderCore extends JavaPlugin {
 		}
 		
 		if(this.config.getString("worlds.mainWorld").equalsIgnoreCase("defaultWorld")) {
-			this.logger.log(Level.WARNING, "World names does not set properly. Detecting worlds automatically for You");
-			this.logger.log(Level.CONFIG, "Detected main world, with the following name: " + mainWorld);
-			this.logger.log(Level.CONFIG, "Detected nether world, with the following name: " + endWorld);
+			this.logger.log(Level.WARNING, this.local.getLocalizedString("worldDetection.notSet"));
+			this.logger.log(Level.CONFIG, this.local.getLocalizedString("worldDetection.detectNormal").replace("#MAINWORLD#", mainWorld));
+			this.logger.log(Level.CONFIG, this.local.getLocalizedString("worldDetection.detectEnder").replace("#ENDWORLD#", endWorld));
 			
 			this.config.set("worlds.mainWorld", mainWorld);
 			this.config.set("worlds.endWorld", endWorld);
