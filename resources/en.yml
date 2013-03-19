@@ -7,5 +7,14 @@ commands:
   noConsole: 'This command must be running as player!'
   badUsage: 'Bad syntax! Try this:'
 
+updater:
+  sucessDownload: 'An update is already downloaded. Please restart, or reload the server to take effect'
+  failedDownload: 'An update is available, but the latest download attemp is failed. Sent notification to plugin developer!'
+  failedCheck: 'An error has occurred while checking for updates. Sent notification to plugin developer!'
+  updateAvailable1: 'An update available for this plugin.'
+  updateAvailable2: 'Use /ec update download command to download this update'
+  noUpdate: 'No update available for this plugin in current channel!'
+  channelInfo: 'You are receivering updates from the following update channel: #CHANNEL#'
+
 defeat:
   successSingle: 'Siker. :)'

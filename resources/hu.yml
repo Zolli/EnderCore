@@ -1,5 +1,20 @@
 about:
-  langName: 'Hungarian'
+  langName: 'Hungarian (Magyar)'
   author: 'Zolli'
 
-test: 'Test'
+commands:
+  noPermission: 'Nincs jogosultságod ehhez a parancshoz. Legalább rendelkezned kell ezen jogosultásgok valamelyikével: '
+  noConsole: 'Ezt a parancsat csak játékos futtathatja!'
+  badUsage: 'Hibás formátum! Így próbáld:'
+
+updater:
+  sucessDownload: 'Egy frissítés már letöltésre került. Indítsd újra, vagy reload-old a szervert a változások érvénybeléptetéséhez'
+  failedDownload: 'Egy frissítés elérhetõ, bár az utolsó letöltési próbálkozás sikertelen volt. Jelentés elküldve a fejlesztõnek!'
+  failedCheck: 'Egy hiba lépett fel a frissítések ellenõrzése közben. Jelentés elküldve a fejlesztõnek!'
+  updateAvailable1: 'Egy frissítés érhetõ el ehhez a pluginhoz.'
+  updateAvailable2: 'Használd a "/ec update download" parancsot a letöltéshez'
+  noUpdate: 'A jelenlegi csatornán nem érhetõ el frissítés ehhez a pluginhez!'
+  channelInfo: 'Te jelenleg a következõ csatornáról kapsz frissítéseket: #CHANNEL#'
+
+defeat:
+  successSingle: 'Siker. :)'
