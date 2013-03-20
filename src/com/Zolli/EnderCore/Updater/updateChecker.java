@@ -96,7 +96,7 @@ public class updateChecker {
 	 * Download the selected file from update server and copy it to the update directory
 	 */
 	public void downloadUpdate() {
-		updateDownloaderThread downloader = new updateDownloaderThread("http://ec.zolli.tk/updater/files/EnderCore.jar", this.plugin.logger);
+		updateDownloaderThread downloader = new updateDownloaderThread("http://ec.zolli.tk/updater/files/EnderCore.jar", this.plugin.getRelativePath(), this.plugin.logger);
 		Thread t = new Thread(downloader);
 		t.start();
 		try {

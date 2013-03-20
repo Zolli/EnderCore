@@ -9,10 +9,12 @@ public class updateDownloaderThread implements Runnable {
 	
 	String downloadUrl;
 	simpleLogger log;
+	String saveLocation;
 	updateResult downloadResult;
 	
-	public updateDownloaderThread(String url, simpleLogger log) {
+	public updateDownloaderThread(String url, String saveLocation, simpleLogger log) {
 		this.downloadUrl = url;
+		this.saveLocation = saveLocation;
 		this.log = log;
 	}
 	
@@ -23,8 +25,7 @@ public class updateDownloaderThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			this.log.log(Level.INFO, this.downloadUrl);
-			if(!(networkUtils.downloadAndSave(this.downloadUrl, "./plugins/update/EnderCore.jar", log))) {
+			if(!(networkUtils.downloadAndSave(this.downloadUrl, "./" + this.saveLocation.replace("plugins", "plugins/update"), log))) {
 				this.downloadResult = updateResult.FAILED_TO_DOWNLOAD;	
 			} else {
 				this.downloadResult = updateResult.SUCCESS;

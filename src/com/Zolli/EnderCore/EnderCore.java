@@ -201,6 +201,14 @@ public class EnderCore extends JavaPlugin {
 	}
 	
 	/**
+	 * Return the relative position of the plugin file, and the filename
+	 * @return String relative location
+	 */
+	public String getRelativePath() {
+		return this.getFile().toString();
+	}
+	
+	/**
 	 * Get all worlds and get the main world name and nether name
 	 * Save the config when main world name contains the default value
 	 */
