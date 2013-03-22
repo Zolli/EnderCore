@@ -42,14 +42,12 @@ public class infoCommand implements ECCommand {
 	@Override
 	public boolean execute(CommandSender sender, String[] allArgs, String chainedParams) {
 		consoleMenuBuilder m = new consoleMenuBuilder("EnderCore - Info");
-		m.addMenuItem("/ec info - Display this message");
-		m.addMenuItem("/ec help - Display short help message");
-		m.addMenuItem("/ec purge - Pureg all data in database");
-		m.addMenuItem("/ec status - Display status info");
+		m.addMenuItem("/ec info - Display this message")
+			.addMenuItem("/ec help - Display short help message")
+			.addMenuItem("/ec purge - Pureg all data in database")
+			.addMenuItem("/ec status - Display status info")
+			.build(sender);
 		
-		m.build(sender);
-		
-		System.out.println(chainedParams);
 		return false;
 	}
 	
@@ -72,10 +70,10 @@ public class infoCommand implements ECCommand {
 	public int getArgsLength() {
 		return 2;
 	}
-	
+
 	@Override
 	public boolean isAccessibleFromConsole() {
-		return false;
+		return true;
 	}
 	
 }

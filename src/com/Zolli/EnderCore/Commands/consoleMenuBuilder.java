@@ -45,8 +45,9 @@ public class consoleMenuBuilder {
 	 * Add item to building list
 	 * @param item Menu item
 	 */
-	public void addMenuItem(String item) {
+	public consoleMenuBuilder addMenuItem(String item) {
 		this.menuItems.add(item);
+		return this;
 	}
 	
 	/**
