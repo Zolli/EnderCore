@@ -1,6 +1,7 @@
 package com.Zolli.EnderCore;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -25,6 +26,7 @@ import com.Zolli.EnderCore.Listeners.worldListener;
 import com.Zolli.EnderCore.Localization.localizationManager;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
+import com.Zolli.EnderCore.Metrics.Metrics;
 import com.Zolli.EnderCore.Permission.permissionHandler;
 import com.Zolli.EnderCore.Storage.Storage;
 import com.Zolli.EnderCore.Storage.storageActions;
@@ -110,6 +112,11 @@ public class EnderCore extends JavaPlugin {
 	public updateChecker updater;
 	
 	/**
+	 * pluginMetrics object
+	 */
+	public Metrics metrics;
+	
+	/**
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
@@ -158,6 +165,9 @@ public class EnderCore extends JavaPlugin {
 		this.registerListeners();
 		this.registerCommands();
 		
+		/* Initializing Metrics */
+		this.initializeMetrics();
+		
 		/* Log the successfully initialization */
 		this.logger.log(Level.INFO, this.local.getLocalizedString("initialization.sucess"));
 	}
@@ -168,6 +178,17 @@ public class EnderCore extends JavaPlugin {
 	public void onDisable() {
 		this.mainConfig.saveConfig();
 		this.logger.log(Level.INFO, this.local.getLocalizedString("initialization.disabled!"));
+	}
+	
+	/**
+	 * Initialize Metrics
+	 */
+	public void initializeMetrics() {
+		try {
+			this.metrics = new Metrics(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

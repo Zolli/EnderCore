@@ -11,6 +11,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.Zolli.EnderCore.EnderCore;
 import com.Zolli.EnderCore.Events.playerDefeatDragonEvent;
+import com.Zolli.EnderCore.Metrics.Metrics.Plotter;
 
 public class entityListener implements Listener {
 	
@@ -37,10 +38,19 @@ public class entityListener implements Listener {
 		Entity entity = e.getEntity();
 		
 		if((entity != null) && (event != null) && (entity instanceof EnderDragon) && (event instanceof EntityDamageByEntityEvent)) {
+			/* Call custom metrics plotter */
+			this.plugin.metrics.addCustomData(new Plotter("EnderDragon killd") {
+				public int getValue() {
+					return 1;
+				}
+			});
+			
+			/* Cast event to EntityDamageByEntityEvent, for getting damager */
 			EntityDamageByEntityEvent EDBEEvent = (EntityDamageByEntityEvent) event;
 			Player pl = (Player) EDBEEvent.getDamager();
 			EnderDragon enderDragon = (EnderDragon) entity;
 			
+			/* Setting successful defet in database */
 			plugin.dbAction.setDefeated(pl.getName(), true);
 			pl.sendMessage(plugin.local.getLocalizedString("defeat.successSingle"));
 			
