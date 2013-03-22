@@ -12,7 +12,7 @@
 	<property name="build" location="${target}/"/>
 	
 	<!-- The game and server version, which the librarys download for -->
-	<property name="libsVer" value="145"/>
+	<property name="libsVer" value="147"/>
 	
 	<!-- Librarys definition -->
 	<property name="bukkit" value="Bukkit.jar"/>
