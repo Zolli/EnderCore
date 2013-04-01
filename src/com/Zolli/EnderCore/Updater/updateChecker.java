@@ -105,7 +105,7 @@ public class updateChecker {
 			t.join();
 			this.result = downloader.getdownloadResult();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			this.plugin.reporter.pushReport(e);
 		}
 	}
 	

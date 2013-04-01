@@ -132,7 +132,7 @@ public class Storage {
 					stmt.executeUpdate(fileUtils.streamToString(plugin.getResource("sql/" + this.selectedEngine.getName() + "/createTable.sql")));
 					stmt.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					this.plugin.reporter.pushReport(e);
 				}
 				break;
 			case SQLITE:
@@ -141,7 +141,7 @@ public class Storage {
 					stmt.executeUpdate(fileUtils.streamToString(plugin.getResource("sql/" + this.selectedEngine.getName() + "/createTable.sql")));
 					stmt.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					this.plugin.reporter.pushReport(e);
 				}
 				break;
 			case H2DB:
@@ -150,7 +150,7 @@ public class Storage {
 					stmt.executeUpdate(fileUtils.streamToString(plugin.getResource("sql/" + this.selectedEngine.getName() + "/createTable.sql")));
 					stmt.close();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					this.plugin.reporter.pushReport(e);
 				}
 				break;
 		default:
@@ -170,7 +170,7 @@ public class Storage {
 				this.ffStorage = this.plugin.initializeFlatfile().config;
 				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "MySQL"));
 			} catch (Exception e) {
-				e.printStackTrace();
+				this.plugin.reporter.pushReport(e);
 			}
 		} else if(this.selectedEngine.equals(storageEngine.SQLITE)) {
 			try {
@@ -180,7 +180,7 @@ public class Storage {
 				this.ffStorage = this.plugin.initializeFlatfile().config;
 				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "SQLite"));
 			} catch (Exception e) {
-				e.printStackTrace();
+				this.plugin.reporter.pushReport(e);
 			} 
 		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
 			try {
@@ -191,7 +191,7 @@ public class Storage {
 				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.initialize").replace("#ENGINE#", "H2"));
 			} catch (Exception e) {
 				logger.log(Level.INFO, this.plugin.local.getLocalizedString("storage.driverNotFound").replace("#ENGINE#", "H2"));
-				e.printStackTrace();
+				this.plugin.reporter.pushReport(e);
 			} 
 		} else {
 			if(this.selectedEngine.equals(storageEngine.FLATFILE)) {
@@ -213,21 +213,21 @@ public class Storage {
 				Connection conn = DriverManager.getConnection("jdbc:mysql://" + this.config.getString("database.host") + "/" + this.config.getString("database.name"), this.config.getString("database.username"), this.config.getString("database.password"));
 				return conn;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				this.plugin.reporter.pushReport(e);
 			}
 		} else if(this.selectedEngine.equals(storageEngine.SQLITE)) {
 			try {
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.dataFolder + File.separator + "EnderCore.db", this.config.getString("database.username"), this.config.getString("database.password"));
 				return conn;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				this.plugin.reporter.pushReport(e);
 			}
 		} else if(this.selectedEngine.equals(storageEngine.H2DB)) {
 			try {
 				Connection conn = DriverManager.getConnection("jdbc:h2:" + this.dataFolder + File.separator + "EnderCore;AUTO_RECONNECT=TRUE", this.config.getString("database.username"), this.config.getString("database.password"));
 				return conn;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				this.plugin.reporter.pushReport(e);
 			}
 		}
 		return null;
@@ -242,8 +242,7 @@ public class Storage {
 		try {
 			networkUtils.downloadAndSave(Url, "./lib" + File.separator + savedFileName, this.plugin.logger);
 		} catch (Exception e) {
-			e.getMessage();
-			e.printStackTrace();
+			this.plugin.reporter.pushReport(e);
 		}
 	}
 	

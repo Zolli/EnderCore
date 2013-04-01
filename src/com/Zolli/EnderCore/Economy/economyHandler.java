@@ -102,8 +102,7 @@ public class economyHandler implements IEconomy {
 				try {
 					com.earth2me.essentials.api.Economy.add(playerName, amount);
 				} catch(Exception e) {
-					plugin.logger.log(Level.SERVER, this.plugin.local.getLocalizedString("error.exception"));
-					e.printStackTrace();
+					this.plugin.reporter.pushReport(e);
 				}
 				break;
 			case Vault:
@@ -135,8 +134,7 @@ public class economyHandler implements IEconomy {
 				try {
 					com.earth2me.essentials.api.Economy.subtract(playerName, amount);
 				} catch(Exception e) {
-					plugin.logger.log(Level.SERVER, this.plugin.local.getLocalizedString("error.exception"));
-					e.printStackTrace();
+					this.plugin.reporter.pushReport(e);
 				}
 				break;
 			case Vault:
@@ -169,8 +167,7 @@ public class economyHandler implements IEconomy {
 				try {
 					return com.earth2me.essentials.api.Economy.hasEnough(playerName, amount);
 				} catch(Exception e) {
-					plugin.logger.log(Level.SERVER, this.plugin.local.getLocalizedString("error.exception"));
-					e.printStackTrace();
+					this.plugin.reporter.pushReport(e);
 				}
 			case Vault:
 				
