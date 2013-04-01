@@ -145,7 +145,7 @@ public class EnderCore extends JavaPlugin {
 		
 		/* Initialize paste services */
 		new pasteServiceProvider();
-		this.paste = pasteServiceProvider.getService(PasteServiceType.PASTEBIN, false);
+		this.paste = pasteServiceProvider.getService(PasteServiceType.PASTIE, false);
 		
 		/* Initialize error reporter */
 		this.reporter = new simpleErrorReporter(this);
