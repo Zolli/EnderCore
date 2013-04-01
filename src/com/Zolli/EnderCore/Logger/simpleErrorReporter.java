@@ -44,7 +44,7 @@ public class simpleErrorReporter {
 		sb.append("OS version: " + System.getProperty("os.version") + "\r\n");
 		
 		for(Plugin p : this.plugin.getServer().getPluginManager().getPlugins()) {
-			plugins = p.getName() + ", " ;
+			plugins = plugins + p.getName() + ", " ;
 		}
 		
 		sb.append("Used plugins: " + plugins + "\r\n");
