@@ -1,8 +1,10 @@
 package com.Zolli.EnderCore.Updater;
 
+import java.net.URL;
+
 import com.Zolli.EnderCore.EnderCore;
-import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Utils.networkUtils;
+import com.Zolli.EnderCore.Utils.WebPaste.exceptionSerializer;
 
 public class updateChecker {
 
@@ -66,7 +68,7 @@ public class updateChecker {
 		
 		this.latestVersion = parts[1];
 		this.latestVersionBuildNumber = parts[2];
-		this.changelog = this.paresChangelog(parts[0].split(";"));
+		this.changelog = this.parseChangelog(parts[0].split(";"));
 		this.latestVersionFile = parts[3];
 		
 		if(Double.parseDouble(this.latestVersion) > Double.parseDouble(this.pluginVersion)) {
@@ -83,7 +85,7 @@ public class updateChecker {
 	 * @param changes Unformatted changelog
 	 * @return string Formatted changelog
 	 */
-	private String paresChangelog(String[] changes) {
+	private String parseChangelog(String[] changes) {
 		String returnString = "";
 		
 		for(int i = 0 ; i < changes.length-1 ; i++ ) {

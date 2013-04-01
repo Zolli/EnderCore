@@ -24,6 +24,7 @@ import com.Zolli.EnderCore.Listeners.playerListener;
 import com.Zolli.EnderCore.Listeners.serverListeners;
 import com.Zolli.EnderCore.Listeners.worldListener;
 import com.Zolli.EnderCore.Localization.localizationManager;
+import com.Zolli.EnderCore.Logger.simpleErrorReporter;
 import com.Zolli.EnderCore.Logger.simpleLogger;
 import com.Zolli.EnderCore.Logger.simpleLogger.Level;
 import com.Zolli.EnderCore.Metrics.Metrics;
@@ -31,8 +32,10 @@ import com.Zolli.EnderCore.Permission.permissionHandler;
 import com.Zolli.EnderCore.Storage.Storage;
 import com.Zolli.EnderCore.Storage.storageActions;
 import com.Zolli.EnderCore.Updater.updateChecker;
-import com.Zolli.EnderCore.Updater.updateDownloaderThread;
 import com.Zolli.EnderCore.Utils.stringUtils;
+import com.Zolli.EnderCore.Utils.WebPaste.pasteService;
+import com.Zolli.EnderCore.Utils.WebPaste.pasteServiceProvider;
+import com.Zolli.EnderCore.Utils.WebPaste.pasteServiceType.PasteServiceType;
 
 public class EnderCore extends JavaPlugin {
 	
@@ -117,6 +120,16 @@ public class EnderCore extends JavaPlugin {
 	public Metrics metrics;
 	
 	/**
+	 * Paste service builder
+	 */
+	public pasteService paste;
+	
+	/**
+	 * simpleErrorReporter object
+	 */
+	public simpleErrorReporter reporter;
+	
+	/**
 	 * Runs when plugin initialization started
 	 */
 	public void onLoad() {
@@ -129,6 +142,14 @@ public class EnderCore extends JavaPlugin {
 		this.mainConfig = new Configuration(this, "config.yml");
 		config = mainConfig.config;
 		this.local = new localizationManager(this);
+		
+		/* Initialize paste services */
+		new pasteServiceProvider();
+		this.paste = pasteServiceProvider.getService(PasteServiceType.PASTEBIN, false);
+		
+		/* Initialize error reporter */
+		this.reporter = new simpleErrorReporter(this);
+		
 	}
 	
 	/**

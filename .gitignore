@@ -1,6 +1,13 @@
+# Eclipse project files
 /.settings
-/bin
 .classpath
 .project
+
+# Build folders
+/bin
 /lib
 /target
+
+# IntelliJ IDEA project files
+/.idea
+*.iml
