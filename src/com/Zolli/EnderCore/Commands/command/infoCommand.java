@@ -1,9 +1,15 @@
 package com.Zolli.EnderCore.Commands.command;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.server.v1_4_R1.NBTTagCompound;
+
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.Zolli.EnderCore.EnderCore;
 import com.Zolli.EnderCore.Commands.ECCommand;
@@ -47,7 +53,6 @@ public class infoCommand implements ECCommand {
 			.addMenuItem("/ec purge - Pureg all data in database")
 			.addMenuItem("/ec status - Display status info")
 			.build(sender);
-		
 		return false;
 	}
 	

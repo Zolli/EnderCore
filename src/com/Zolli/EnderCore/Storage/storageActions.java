@@ -54,9 +54,6 @@ public class storageActions implements IPlayerAction {
 					this.ffStorage.set(pl.getName() + ".dragonDefeated", "0");
 				}
 			break;
-			case NBT:
-				
-			break;
 		default:
 			break;
 		}

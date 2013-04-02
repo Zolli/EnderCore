@@ -74,8 +74,6 @@ public class Storage {
 			engine = storageEngine.H2DB;
 		} else if(driver.equalsIgnoreCase(storageEngine.FLATFILE.getName())) {
 			engine = storageEngine.FLATFILE;
-		} else if(driver.equalsIgnoreCase(storageEngine.NBT.getName())) {
-			engine = storageEngine.NBT;
 		} else {
 			engine = storageEngine.SQLITE;
 		}
@@ -258,8 +256,7 @@ public class Storage {
 		SQLITE("sqlite", "http://cdn.zolli.tk/minecraft/lib/sqliteConnector.jar", "sqlite.jar"),
 		MySQL("mysql",  "http://cdn.zolli.tk/minecraft/mysqlConnector.jar", "mysql.jar"),
 		H2DB("h2", "http://cdn.zolli.tk/minecraft/lib/h2Connector.jar", "h2.jar"),
-		FLATFILE("flatfile", "none", "none"),
-		NBT("nbt", "none", "none");
+		FLATFILE("flatfile", "none", "none");
 		
 		private String driverUrl;
 		private String fileName;
