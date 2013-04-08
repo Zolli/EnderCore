@@ -19,7 +19,7 @@ public class ECPlayer  {
 	}
 
 	public boolean isDragonDefeted() {
-		return this.plugin.dbAction.getDefeatStatus(this.player.getName());
+		return this.plugin.dbAction.getDefeatStatus(this.player);
 	}
 
 }

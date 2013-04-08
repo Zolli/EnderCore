@@ -51,7 +51,7 @@ public class entityListener implements Listener {
 			EnderDragon enderDragon = (EnderDragon) entity;
 			
 			/* Setting successful defet in database */
-			plugin.dbAction.setDefeated(pl.getName(), true);
+			plugin.dbAction.setDefeated(pl, true);
 			pl.sendMessage(plugin.local.getLocalizedString("defeat.successSingle"));
 			
 			//Trigger the playerDefeatDragonEvent()

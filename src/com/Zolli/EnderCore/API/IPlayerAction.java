@@ -7,8 +7,7 @@ import org.bukkit.entity.Player;
 public interface IPlayerAction {
 
 	public boolean addPlayer(Player pl);
-	public boolean setDefeated(String name, boolean b);
-	public boolean setTag(String newTags);
+	public boolean setTag(Player pl, String key, String value);
 	public Map<String, String> getTag(Player pl);
 	
 	

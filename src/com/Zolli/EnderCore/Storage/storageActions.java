@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -51,7 +53,9 @@ public class storageActions implements IPlayerAction {
 			break;
 			case FLATFILE:
 				if(this.ffStorage.contains(pl.getName())) {
-					this.ffStorage.set(pl.getName() + ".dragonDefeated", "0");
+					this.ffStorage.set(pl.getName() + ".dragonDefeted", "0");
+					this.ffStorage.set(pl.getName() + ".group", "");
+					return true;
 				}
 			break;
 		default:
@@ -60,38 +64,47 @@ public class storageActions implements IPlayerAction {
 		return false;
 	}
 	
-	public boolean setDefeated(String name, boolean b) {
+	public boolean setDefeated(Player pl, boolean b) {
 		switch(this.selectedEngine) {
 			case MySQL:
 			case SQLITE:
 			case H2DB:
 				try {
-					PreparedStatement pstmt = conn.prepareStatement("UPDATE `players` SET dragonDefeated=?");
+					PreparedStatement pstmt = conn.prepareStatement("UPDATE `players` SET dragonDefeated = ? WHERE playerName = ?");
 					if(b) {
 						pstmt.setString(1, "1");
+						pstmt.setString(2, pl.getName());
 					} else {
 						pstmt.setString(1, "0");
+						pstmt.setString(2, pl.getName());
 					}
 					pstmt.executeUpdate();
 					return true;
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				break;
+			break;
+			case FLATFILE:
+				if(b) {
+					this.ffStorage.set(pl.getName() + ".dragonDefeted", "true");
+				} else {
+					this.ffStorage.set(pl.getName() + ".dragonDefeted", "false");
+				}
+				return true;
 		default:
 			break;
 		}
 		return false;
 	}
 	
-	public boolean getDefeatStatus(String name) {
+	public boolean getDefeatStatus(Player pl) {
 		switch(this.selectedEngine) {
 			case MySQL:
 			case SQLITE:
 			case H2DB:
 				try {
-					PreparedStatement pstmt = conn.prepareStatement("SELECT dragonDefeated FROM `players` WHERE playerName=? LIMIT 1");
-					pstmt.setString(1, name);
+					PreparedStatement pstmt = conn.prepareStatement("SELECT dragonDefeated FROM `players` WHERE playerName = ? LIMIT 1");
+					pstmt.setString(1, pl.getName());
 					ResultSet rs = pstmt.executeQuery();
 					int result = 0;
 					
@@ -108,19 +121,24 @@ public class storageActions implements IPlayerAction {
 					e.printStackTrace();
 				}
 				break;
-			default:
+			case FLATFILE: 
+				return this.ffStorage.getBoolean(pl.getName() + ".dragonDefeted", false);
+		default:
 				break;
 		}
 		return false;
 	}
 	
-	public boolean setTag(String newTags) {
+	public boolean setTag(Player pl, String key, String value) {
+		String insertString = key + "=" + value + ";";
+		
 		switch (this.selectedEngine) {
 		case MySQL:
 		case SQLITE:
+		case H2DB:
 			try {
 				Statement stmt = conn.createStatement();
-				int rows = stmt.executeUpdate("UPDATE `users` SET uniqueTags = CONCAT(uniqueTags, '" + newTags + "')");
+				int rows = stmt.executeUpdate("UPDATE `users` SET uniqueTags = CONCAT(uniqueTags, '" + insertString + "') WHERE playerName = " + pl.getName());
 				if(rows == 1) {
 					return true;
 				} else {
@@ -130,6 +148,11 @@ public class storageActions implements IPlayerAction {
 				e.printStackTrace();
 			}
 			return false;
+		case FLATFILE:
+			@SuppressWarnings("unchecked")
+			List<String> originalContent = (List<String>) this.ffStorage.getList(pl.getName() + ".specialTags");
+			this.ffStorage.set(pl.getName() + ".specialTags", originalContent.add(insertString));
+			break;
 		default:
 			break;
 		}
@@ -142,6 +165,7 @@ public class storageActions implements IPlayerAction {
 		switch (this.selectedEngine) {
 		case MySQL:
 		case SQLITE:
+		case H2DB:
 			try {
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT uniqueTags FROM `users` WHERE userName=" + pl.getName() + " LIMIT 1");
@@ -153,6 +177,17 @@ public class storageActions implements IPlayerAction {
 				e.printStackTrace();
 			}
 			return null;
+		case FLATFILE:
+			@SuppressWarnings( "unchecked" )
+			List<String> content = (List<String>) this.ffStorage.get(pl.getName() + ".specailTags");
+			Iterator it = content.iterator();
+			String assambledList = null;
+			
+			while(it.hasNext()) {
+				assambledList = assambledList + it.next();
+			}
+			
+			return this.tagHelper.createMap(assambledList);
 		default:
 			break;
 		}
