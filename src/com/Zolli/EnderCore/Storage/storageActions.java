@@ -52,7 +52,7 @@ public class storageActions implements IPlayerAction {
 				}
 			break;
 			case FLATFILE:
-				if(this.ffStorage.contains(pl.getName())) {
+				if(!(this.ffStorage.contains(pl.getName()))) {
 					this.ffStorage.set(pl.getName() + ".dragonDefeted", "0");
 					this.ffStorage.set(pl.getName() + ".group", "");
 					return true;

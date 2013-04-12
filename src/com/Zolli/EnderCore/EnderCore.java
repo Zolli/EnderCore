@@ -198,6 +198,7 @@ public class EnderCore extends JavaPlugin {
 	 */
 	public void onDisable() {
 		this.mainConfig.saveConfig();
+		this.storageConfig.saveConfig();
 		this.logger.log(Level.INFO, this.local.getLocalizedString("initialization.disabled!"));
 	}
 	
